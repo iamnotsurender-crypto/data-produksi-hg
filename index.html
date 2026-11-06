@@ -1,4 +1,32 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:calc(var(--text-scale, 1) * 14px) -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.guide-dialog{width:min(calc(100vw - 24px),900px);max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);margin:auto;padding:0;border:1px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);box-shadow:0 18px 50px #0004;overflow:auto}
+.guide-dialog::backdrop{background:#0b1511b8}
+.guide-header{position:sticky;z-index:2;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.guide-header h2{margin:0;font:700 calc(var(--text-scale, 1) * 21px) var(--display)}
+.guide-body{padding:18px}
+.guide-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px}
+.guide-tab{flex:none;padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:calc(var(--text-scale, 1) * 13px);font-weight:600}
+.guide-tab[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.guide-content{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);gap:14px;align-items:start}
+.guide-content:not(.has-calculator){grid-template-columns:minmax(0,1fr)}
+.guide-card,.guide-calculator,.guide-editor{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.guide-card h3,.guide-calculator h3,.guide-editor h3{margin:0 0 10px;font:700 calc(var(--text-scale, 1) * 19px) var(--display)}
+.guide-copy{margin:0;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.guide-illustration{width:100%;margin-top:14px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+.guide-image{display:block;width:100%;max-height:300px;object-fit:contain;margin-top:12px;border-radius:10px;background:var(--soft)}
+.guide-calculator{display:grid;gap:10px}
+.guide-calculator p{margin:0;color:var(--muted);font-size:calc(var(--text-scale, 1) * 13px)}
+.guide-calculator label,.guide-editor label{display:grid;gap:5px;font-size:calc(var(--text-scale, 1) * 13px);font-weight:600}
+.guide-calculator input,.guide-editor input,.guide-editor textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.guide-editor textarea{min-height:180px;resize:vertical}
+.guide-result{padding:12px;border-radius:9px;background:var(--soft);font-size:calc(var(--text-scale, 1) * 14px)}
+.guide-result strong{color:var(--accent)}
+.guide-actions,.guide-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.guide-editor{margin-top:14px}
+.guide-editor[hidden]{display:none}
+.guide-editor-actions{justify-content:flex-end}
+.guide-error{min-height:20px;color:var(--bad);font-size:calc(var(--text-scale, 1) * 13px)}
+[hidden]{display:none!important}
+</style></head><body>
 <title>Handayani Gorden</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +48,7 @@
   --accent:#5CC2A3; --accent-ink:#06251C;
   --ok:#6FD39B; --ok-bg:#17382A; --wip:#F0B955; --wip-bg:#3A2D10; --wait:#A9B8CB; --wait-bg:#222C38; --bad:#FF8F86; --bad-bg:#3F1E1B; --none:#93A59D; --none-bg:#1D2A25; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:calc(var(--text-scale, 1) * 15px);line-height:1.45;
   padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -28,61 +56,202 @@ button{cursor:pointer}
 .wrap{max-width:1280px;margin:0 auto;padding-block:14px 40px}
 /* brand */
 .brand{display:flex;align-items:center;gap:12px;padding-bottom:14px}
-.logo{width:48px;height:48px;border-radius:10px;border:1px solid var(--line);background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 19px var(--display);overflow:hidden;padding:0;flex:none;position:relative}
-.logo img{width:100%;height:100%;object-fit:cover;display:block}
-.brand h1{font:700 21px/1.1 var(--display);margin:0;letter-spacing:.01em}
-.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.brand h1{font:700 calc(var(--text-scale, 1) * 21px)/1.1 var(--display);margin:0;letter-spacing:.01em}
+#app[data-active-tab="schedule"] #appTitle,
+#app[data-active-tab="updates"] #appTitle,
+#app[data-active-tab="profile"] #appTitle{font-size:calc(var(--text-scale, 1) * 26px);line-height:1.15;margin:8px 0 16px}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:calc(var(--text-scale, 1) * 13px)}
 .brand .sp{flex:1}
-.sync{font-size:12px;color:var(--muted);white-space:nowrap}
+.sync{font-size:calc(var(--text-scale, 1) * 12px);color:var(--muted);white-space:nowrap}
+#sync{
+  position:fixed;z-index:30;right:16px;bottom:20px;left:16px;width:max-content;max-width:calc(100vw - 32px);
+  margin:0 auto;padding:10px 16px;border:1px solid var(--line);border-radius:999px;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 22px #16211d24;
+  font-size:calc(var(--text-scale, 1) * 14px);line-height:1.35;text-align:center;white-space:normal;overflow-wrap:anywhere;
+  opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s
+}
+#sync.is-visible{opacity:1;transform:translateY(0)}
+@media (max-width:900px){#sync{bottom:calc(82px + env(safe-area-inset-bottom))}}
 /* reminders */
-.alerts{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px}
-.alert{flex:0 0 auto;min-width:230px;max-width:300px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:3px}
-.alert .when{font:700 11px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.alerts{margin-bottom:14px}
+.alerts-track{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain}
+.alert{flex:0 0 min(310px,86vw);max-width:340px;scroll-snap-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:left;display:flex;flex-direction:column;gap:4px}
+.alert-dots{display:flex;justify-content:center;gap:8px;padding:4px 0 2px}
+.alert-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:var(--line)}
+.alert-dot[aria-current="true"]{width:22px;border-radius:999px;background:var(--accent)}
+.alert .when{font:700 calc(var(--text-scale, 1) * 11px) var(--body);letter-spacing:.08em;text-transform:uppercase}
 .alert.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .alert.today .when{color:var(--accent)}
 .alert.late .when{color:var(--bad)}
 .alert.tomorrow .when{color:var(--wip)}
-.alert b{font-family:var(--display);font-size:16px}
-.alert .st{font-size:13px;color:var(--muted)}
+.alert b{font-family:var(--display);font-size:calc(var(--text-scale, 1) * 16px)}
+.alert .st{font-size:calc(var(--text-scale, 1) * 13px);color:var(--muted)}
 .alert .st.warn{color:var(--bad);font-weight:600}
 .alert .st.good{color:var(--ok);font-weight:600}
-.alerts-empty{color:var(--muted);font-size:13px;padding:2px 0 14px}
+.alerts-empty{color:var(--muted);font-size:calc(var(--text-scale, 1) * 13px);padding:2px 0 14px}
+.tab-page{min-height:calc(100vh - 180px);padding-bottom:18px}
+.schedule-calendar{max-width:760px;margin:0 auto 20px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.schedule-calendar-toolbar{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:10px;margin-bottom:12px}
+.schedule-calendar-toolbar strong{text-align:center;font:700 calc(var(--text-scale, 1) * 18px) var(--display);text-transform:capitalize}
+.schedule-calendar-toolbar .btn{min-height:38px;padding:6px}
+.schedule-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.schedule-weekday{padding:7px 2px;color:var(--muted);font-size:calc(var(--text-scale, 1) * 11px);font-weight:700;text-align:center}
+.schedule-day{position:relative;min-width:0;min-height:43px;display:grid;place-items:center;align-content:center;gap:2px;padding:4px 2px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--ink);font-size:calc(var(--text-scale, 1) * 13px)}
+.schedule-day:hover{background:var(--soft)}
+.schedule-day.today{border-color:var(--accent);color:var(--accent);font-weight:700}
+.schedule-day.selected{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.schedule-day.selected.today{box-shadow:inset 0 0 0 1px var(--accent-ink)}
+.schedule-day-markers{height:5px;display:flex;gap:2px;align-items:center}
+.schedule-day-markers i{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.schedule-day.selected .schedule-day-markers i{background:var(--accent-ink)}
+.schedule-day-count{font-size:calc(var(--text-scale, 1) * 9px);line-height:1}
+.schedule-entry-section{max-width:760px;margin:0 auto}
+.schedule-entry-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 10px}
+.schedule-entry-heading h2{margin:0;font:700 calc(var(--text-scale, 1) * 19px) var(--display)}
+.schedule-entry-heading span{color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px)}
+.schedule-entries{display:grid;gap:9px}
+.schedule-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.schedule-entry-main{min-width:0;display:grid;gap:4px}
+.schedule-entry-main strong{font:700 calc(var(--text-scale, 1) * 16px) var(--display);overflow-wrap:anywhere}
+.schedule-entry-main span{color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px)}
+.schedule-entry-meta{grid-column:1/-1;color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px)}
+.schedule-entry .btn{grid-column:2;grid-row:1/3}
+.schedule-empty{padding:24px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center}
+.updates-status-page{max-width:760px;margin:0 auto}
+.my-status-container,.status-person-row{display:flex;align-items:center;gap:8px}
+.my-status-container{margin-bottom:18px}
+.status-person-row{border-bottom:1px solid var(--line)}
+.my-status-row,.status-person{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);text-align:left}
+.my-status-row{flex:1;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.status-avatar-wrap{position:relative;width:52px;height:52px;flex:none;padding:3px;border:2px solid var(--line);border-radius:50%}
+.status-avatar-wrap.unseen{border-color:var(--accent)}
+.status-avatar-wrap.seen{border-color:var(--muted)}
+.status-avatar-wrap img,.status-avatar-initials{width:100%;height:100%;display:grid;place-items:center;overflow:hidden;border-radius:50%;object-fit:cover;background:var(--soft);color:var(--accent);font-size:calc(var(--text-scale, 1) * 13px);font-weight:700}
+.status-add-badge{position:absolute;right:-3px;bottom:-3px;width:21px;height:21px;display:grid;place-items:center;border:2px solid var(--surface);border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:calc(var(--text-scale, 1) * 16px);line-height:1}
+.status-person-info{min-width:0;display:grid;gap:3px}
+.status-person-info strong{font-size:calc(var(--text-scale, 1) * 14px)}
+.status-person-info small{color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px)}
+.status-section-title{margin:22px 0 6px;font-size:calc(var(--text-scale, 1) * 14px);font-weight:700}
+.status-section-empty{padding:14px 4px;color:var(--muted);font-size:calc(var(--text-scale, 1) * 13px)}
+.status-list{display:grid}
+.status-person{flex:1;min-width:0;cursor:pointer}
+.status-person:hover{background:var(--soft)}
+.status-delete-button{flex:none;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--bad);font-size:calc(var(--text-scale, 1) * 12px);font-weight:600}
+.status-delete-button:hover{border-color:var(--bad);background:var(--bad-bg)}
+.status-compose-fab{position:fixed;z-index:21;right:max(22px,env(safe-area-inset-right));bottom:calc(88px + env(safe-area-inset-bottom));width:58px;height:58px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 20px #0003;font-size:calc(var(--text-scale, 1) * 27px)}
+.status-compose-fab:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.update-composer,.profile-card{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.update-dialog{width:min(calc(100vw - 28px),500px);max-width:none;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);padding:0;border:0;border-radius:14px;background:var(--surface);color:var(--ink);overflow:visible}
+.update-composer{width:100%;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);margin:auto;display:grid;align-content:start;gap:12px;overflow:auto;color:var(--ink)}
+.update-dialog::backdrop{background:#0b1511a8}
+.update-composer label,.profile-form label{display:grid;gap:5px;font-size:calc(var(--text-scale, 1) * 13px);font-weight:600}
+.update-composer select,.update-composer textarea,.profile-form input,.profile-form select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.update-composer select[multiple]{min-height:96px}
+.update-composer textarea{min-height:88px;resize:vertical}
+.update-photo-preview{width:100%;max-height:300px;object-fit:contain;border-radius:9px;background:var(--bg)}
+.status-viewer{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:calc(12px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom));border:0;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:12px;background:#101411;color:#fff}
+.status-viewer:not([open]){display:none}
+.status-viewer::backdrop{background:#000e}
+.status-viewer-top{display:flex;align-items:center;gap:10px}
+.status-viewer-owner{flex:1;min-width:0;display:grid;gap:2px}
+.status-viewer-owner small{color:#c3ccc6;font-size:calc(var(--text-scale, 1) * 11px)}
+.status-progress{display:flex;gap:4px}
+.status-progress span{height:3px;flex:1;border-radius:4px;background:#ffffff55}
+.status-progress span[data-seen="true"]{background:#fff}
+.status-viewer-photo{min-height:0;display:grid;place-items:center;position:relative}
+.status-viewer-photo img{max-width:100%;max-height:100%;object-fit:contain}
+.status-viewer-caption{position:absolute;right:12px;bottom:12px;left:12px;margin:0;padding:10px;border-radius:8px;background:#0008;text-align:center}
+.status-viewer-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.status-viewer-tags span{padding:5px 10px;border:1px solid #ffffff55;border-radius:999px;background:#202722;color:#fff;font-size:calc(var(--text-scale, 1) * 12px)}
+.status-viewer-actions{display:flex;justify-content:center;gap:10px}
+.status-viewer-actions button{min-width:90px;color:#fff;border-color:#ffffff66;background:#202722}
+.status-viewer .btn{color:#fff;border-color:#ffffff66;background:#202722}
+.status-viewer-nav{position:absolute;top:0;bottom:0;width:30%;border:0;background:transparent}
+.status-viewer-nav.previous{left:0}
+.status-viewer-nav.next{right:0}
+.status-viewer-nav:focus-visible{outline:none}
+.profile-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.profile-card h2{margin:0 0 14px;font:700 calc(var(--text-scale, 1) * 19px) var(--display)}
+.profile-form{display:grid;gap:12px}
+.profile-identity{display:flex;align-items:center;gap:14px}
+.profile-avatar{width:76px;height:76px}
+.profile-form input[type="color"]{height:42px;padding:3px}
+.palette-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.profile-actions{display:flex;gap:8px;flex-wrap:wrap}
+.text-scale-control{display:flex;align-items:center;gap:12px}
+.text-scale-control input{flex:1;min-width:0;accent-color:var(--accent)}
+.text-scale-control output{min-width:48px;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right}
+.text-scale-preview{margin:0;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft);font-size:calc(var(--text-scale, 1) * 16px)}
+.bottom-nav{position:fixed;z-index:20;right:0;bottom:0;left:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:7px max(8px,env(safe-area-inset-left)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -4px 18px #16211d12}
+.bottom-nav button{min-height:52px;display:grid;place-items:center;align-content:center;gap:3px;padding:4px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-size:calc(var(--text-scale, 1) * 10px);font-weight:600}
+.bottom-nav button[aria-current="page"]{color:var(--accent);background:var(--soft)}
+.bottom-nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#app{padding-bottom:calc(78px + env(safe-area-inset-bottom))}
 /* main */
 .main{display:grid;grid-template-columns:330px minmax(0,1fr);gap:16px;align-items:start}
 .side,.detail{min-width:0}
 .side{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;position:sticky;top:12px;max-height:calc(100vh - 24px);display:flex;flex-direction:column;gap:10px}
 .search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 11px;font-size:13px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 11px;font-size:calc(var(--text-scale, 1) * 13px)}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 13px;font-weight:600;font-size:14px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 13px;font-weight:600;font-size:calc(var(--text-scale, 1) * 14px)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.danger{color:var(--bad)}
 .btn.armed{background:var(--bad);border-color:var(--bad);color:#fff}
-.btn.sm{padding:5px 10px;font-size:13px}
+.btn.sm{padding:5px 10px;font-size:calc(var(--text-scale, 1) * 13px)}
 .btn:hover{border-color:var(--accent)}
 .list{overflow-y:auto;display:flex;flex-direction:column;gap:6px;min-height:60px}
 .item{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:9px 11px;display:flex;flex-direction:column;gap:5px}
 .item[aria-current="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--soft)}
-.item .r1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.item b{font-family:var(--display);font-size:16px;overflow-wrap:anywhere}
-.item .dt{font-size:12.5px;color:var(--muted);white-space:nowrap}
-.item .r2{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
-.empty{color:var(--muted);font-size:14px;padding:18px 8px;text-align:center}
+.item .r1{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.customer-main{display:flex;align-items:flex-start;gap:9px;min-width:0}
+.customer-avatar{width:42px;height:42px;flex:none;display:grid;place-items:center;overflow:hidden;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--soft);color:var(--accent);font:700 calc(var(--text-scale, 1) * 13px) var(--display)}
+.customer-avatar:not(:disabled){cursor:pointer}
+.customer-avatar:not(:disabled):hover{border-color:var(--accent)}
+.customer-avatar img{width:100%;height:100%;object-fit:cover}
+.customer-heading{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;min-width:0}
+.item b{font-family:var(--display);font-size:calc(var(--text-scale, 1) * 16px);overflow-wrap:anywhere}
+.customer-materials{display:flex;flex-wrap:wrap;gap:3px 8px;color:var(--muted);font-size:calc(var(--text-scale, 1) * 11px);line-height:1.4}
+.customer-materials span{overflow-wrap:anywhere}
+.item .dt{font-size:calc(var(--text-scale, 1) * 12.5px);color:var(--muted);white-space:nowrap}
+.status-breakdown{display:flex;flex-wrap:wrap;gap:5px}
+.status-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;font-size:calc(var(--text-scale, 1) * 11px);line-height:1.3;font-weight:600;background:var(--none-bg);color:var(--none)}
+.status-chip .count{font-weight:700}
+.status-chip.ok{background:var(--ok-bg);color:var(--ok)}
+.status-chip.wip{background:var(--wip-bg);color:var(--wip)}
+.status-chip.wait{background:var(--wait-bg);color:var(--wait)}
+.status-chip.bad{background:var(--bad-bg);color:var(--bad)}
+.item .r2{display:flex;justify-content:space-between;font-size:calc(var(--text-scale, 1) * 12.5px);color:var(--muted)}
+.empty{color:var(--muted);font-size:calc(var(--text-scale, 1) * 14px);padding:18px 8px;text-align:center}
 .bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}
 .bar i{display:block;height:100%}
-.bar .ok{background:var(--ok)}.bar .wip{background:#D49A1F}.bar .wait{background:var(--wait)}.bar .bad{background:var(--bad)}
+.bar .ok{background:var(--ok)}.bar .bad{background:var(--bad)}
+.bar .material,.progress-select.material,.status-chip.material,.pill.material{background:#DCEEFF;color:#175A91}
+.bar .cut,.progress-select.cut,.status-chip.cut,.pill.cut{background:#E9E0FF;color:#56369B}
+.bar .cut-done,.progress-select.cut-done,.status-chip.cut-done,.pill.cut-done{background:#D9E7FF;color:#244F9C}
+.bar .wip,.progress-select.wip,.status-chip.wip,.pill.wip{background:var(--wip-bg);color:var(--wip)}
+.bar .sew-done,.progress-select.sew-done,.status-chip.sew-done,.pill.sew-done{background:#F8DFF0;color:#8A326C}
+.bar .iron,.progress-select.iron,.status-chip.iron,.pill.iron{background:#D6F1F4;color:#17616B}
+.bar .iron-done,.progress-select.iron-done,.status-chip.iron-done,.pill.iron-done{background:#D9F0E7;color:#176448}
+.bar .steam,.progress-select.steam,.status-chip.steam,.pill.steam{background:#DCE8FA;color:#355C9A}
+.bar .steam-done,.progress-select.steam-done,.status-chip.steam-done,.pill.steam-done{background:#D9EFEF;color:#246567}
+.bar .checked,.progress-select.checked,.status-chip.checked,.pill.checked{background:#E1E5FA;color:#3F4C9B}
+.bar .wait,.progress-select.wait,.status-chip.wait,.pill.wait{background:var(--wait-bg);color:var(--wait)}
+.bar .none,.progress-select.none,.status-chip.none,.pill.none{background:var(--none-bg);color:var(--none)}
 /* detail */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
 .dhead{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:12px}
 .field{display:flex;flex-direction:column;gap:4px;min-width:0}
-.field label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.field label{font-size:calc(var(--text-scale, 1) * 12px);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .field input,.field textarea,.panel input,.panel select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .field.wide{grid-column:1/-1}
-.nameinput{font:700 26px/1.15 var(--display);border:0!important;background:transparent!important;padding:2px 0!important;border-bottom:2px solid var(--line)!important;border-radius:0!important}
+.nameinput{font:700 calc(var(--text-scale, 1) * 26px)/1.15 var(--display);border:0!important;background:transparent!important;padding:2px 0!important;border-bottom:2px solid var(--line)!important;border-radius:0!important}
 .topline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.back{display:none}
-.pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:600;background:var(--none-bg);color:var(--none);border:1px solid var(--line)}
+.detail-menu{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.detail-menu-right{display:flex;align-items:center;gap:10px}
+.detail-menu .sync{white-space:normal;text-align:right}
+.pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:calc(var(--text-scale, 1) * 12.5px);font-weight:600;background:var(--none-bg);color:var(--none);border:1px solid var(--line)}
 .pill.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
 .pill.wip{background:var(--wip-bg);color:var(--wip);border-color:transparent}
 .pill.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}
@@ -90,60 +259,124 @@ button{cursor:pointer}
 .panel{margin-top:14px;border:1px dashed var(--accent);border-radius:10px;padding:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:end;background:var(--soft)}
 .sum{margin-top:14px;display:grid;gap:8px}
 .sumrow{display:flex;gap:6px;flex-wrap:wrap}
-.hist{margin-top:10px;font-size:13px;color:var(--muted)}
+.hist{margin-top:10px;font-size:calc(var(--text-scale, 1) * 13px);color:var(--muted)}
 .hist summary{cursor:pointer}
 .hist li{margin:3px 0}
 .tables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px;align-items:start}
 .col{display:flex;flex-direction:column;gap:12px;min-width:0}
-.col h2{font:700 13px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.col h2{font:700 calc(var(--text-scale, 1) * 13px) var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tbl{background:var(--surface);border:1.5px solid var(--ink);border-radius:6px;overflow:hidden;min-width:0}
 .tbl header{display:flex;gap:8px;align-items:center;padding:8px 10px;border-bottom:1.5px solid var(--ink);background:var(--soft)}
-.tbl .tname{flex:1;min-width:0;border:0;background:transparent;font:700 16px var(--display);padding:4px 2px}
-.tbl .cnt{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.tbl .tname{flex:1;min-width:0;border:0;background:transparent;font:700 calc(var(--text-scale, 1) * 16px) var(--display);padding:4px 2px}
+.tbl .cnt{font-size:calc(var(--text-scale, 1) * 12.5px);color:var(--muted);white-space:nowrap}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:400px}
-th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 6px;border-bottom:1.5px solid var(--ink);font-weight:600}
+th{font-size:calc(var(--text-scale, 1) * 11.5px);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 6px;border-bottom:1.5px solid var(--ink);font-weight:600}
 td{border-bottom:1px solid var(--line);padding:0;vertical-align:middle}
 td+td,th+th{border-left:1px solid var(--line)}
 tr:last-child td{border-bottom:0}
 td input,td select{width:100%;border:0;background:transparent;padding:9px 6px;border-radius:0;font-variant-numeric:tabular-nums}
-td.no{width:30px;text-align:center;color:var(--muted);font-size:12px}
+td.no{width:30px;text-align:center;color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px)}
 td.x{width:34px;text-align:center}
-td.x button{border:0;background:transparent;color:var(--muted);font-size:18px;line-height:1;padding:6px}
-.cek{font-weight:600;font-size:13.5px;padding:9px 4px;cursor:pointer}
-.cek.ok{background:var(--ok-bg);color:var(--ok)}.cek.wip{background:var(--wip-bg);color:var(--wip)}.cek.wait{background:var(--wait-bg);color:var(--wait)}.cek.bad{background:var(--bad-bg);color:var(--bad)}.cek.none{color:var(--muted)}
+td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(var(--text-scale, 1) * 18px);line-height:1;padding:6px}
+.progress-select,.model-select{font-weight:600;font-size:calc(var(--text-scale, 1) * 13.5px);padding:9px 4px;cursor:pointer}
+.progress-select.ok{background:var(--ok-bg);color:var(--ok)}.progress-select.bad{background:var(--bad-bg);color:var(--bad)}.progress-select.none{color:var(--muted)}
 .tfoot{display:flex;justify-content:space-between;padding:6px 8px;border-top:1px solid var(--line);background:var(--soft)}
-.hint{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.hint{font-size:calc(var(--text-scale, 1) * 12.5px);color:var(--muted);margin:2px 0 0}
 .placeholder{display:grid;place-items:center;text-align:center;color:var(--muted);padding:60px 20px;min-height:320px}
-.placeholder h2{font:700 22px var(--display);color:var(--ink);margin:0 0 6px}
+.placeholder h2{font:700 calc(var(--text-scale, 1) * 22px) var(--display);color:var(--ink);margin:0 0 6px}
+.photo-dialog{width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:16px;border:0;background:#101411;color:#fff;overflow:hidden}
+.photo-dialog::backdrop{background:#000e}
+.photo-viewer{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px}
+.photo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.photo-toolbar h2{margin:0;font:600 calc(var(--text-scale, 1) * 16px) var(--body);overflow-wrap:anywhere}
+.photo-close{color:#fff;border-color:#ffffff66;background:#202722}
+.photo-viewport{min-height:0;overflow:auto;display:flex;overscroll-behavior:contain}
+.photo-viewport img{display:block;flex:none;max-width:none;height:auto;margin:auto;object-fit:contain}
+.photo-controls{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px}
+.photo-controls .btn{color:#fff;border-color:#ffffff66;background:#202722}
+.photo-controls input[type="range"]{width:min(32vw,220px);accent-color:#6fd39b}
+.photo-controls output{min-width:48px;text-align:center;font-size:calc(var(--text-scale, 1) * 13px);font-variant-numeric:tabular-nums}
+.photo-controls .photo-delete{border-color:#ff8f8666;background:#4b201d;color:#fff}
+.photo-controls .photo-delete:hover{border-color:#ff8f86;background:#672923}
+.camera-dialog{width:min(calc(100% - 24px),760px);max-width:760px;max-height:calc(100% - 24px);margin:auto;padding:16px;border:1px solid #ffffff30;border-radius:14px;background:#101411;color:#fff}
+.camera-dialog::backdrop{background:#000d}
+.camera-viewer{display:grid;gap:12px}
+.camera-video{display:block;width:100%;max-height:min(65vh,720px);aspect-ratio:4/3;object-fit:contain;background:#000;border-radius:8px}
+.camera-error{min-height:20px;margin:0;color:#ffb4a9;font-size:calc(var(--text-scale, 1) * 13px)}
+.camera-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.camera-dialog .btn{color:#fff;border-color:#ffffff66;background:#202722}
+.camera-dialog .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#app[data-view="detail"]>.brand,#app[data-view="detail"]>#alerts{display:none}
+#app[data-view="detail"]{padding-top:0}
 @media (max-width:900px){
   .main{grid-template-columns:minmax(0,1fr)}
   .side{position:static;max-height:none}
   #app[data-view="detail"] .side{display:none}
   #app[data-view="list"] .detail{display:none}
-  .back{display:inline-block}
+  .detail-menu{align-items:flex-start;flex-wrap:wrap}
+  .detail-menu-right{flex-wrap:wrap;justify-content:flex-end}
   .tables{grid-template-columns:minmax(0,1fr)}
-  .nameinput{font-size:22px}
+  .nameinput{font-size:calc(var(--text-scale, 1) * 22px)}
+  .profile-layout{grid-template-columns:minmax(0,1fr)}
+  .guide-content{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .brand{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 12px}
+  .brand .sp{display:none}
+  .brand h1{overflow-wrap:anywhere}
+  .brand .account-tools{grid-column:2;min-width:0;flex-wrap:wrap}
+  .brand .account-name{overflow-wrap:anywhere}
+}
+@keyframes tab-slide-next{from{opacity:.55;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes tab-slide-previous{from{opacity:.55;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@media (prefers-reduced-motion:no-preference){
+  #app[data-tab-direction="next"] .main:not([hidden]),
+  #app[data-tab-direction="next"] .tab-page:not([hidden]){animation:tab-slide-next .22s ease-out}
+  #app[data-tab-direction="previous"] .main:not([hidden]),
+  #app[data-tab-direction="previous"] .tab-page:not([hidden]){animation:tab-slide-previous .22s ease-out}
 }
 @media (prefers-reduced-motion:no-preference){.alert,.item,.btn{transition:border-color .15s,background .15s}}
 .auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--bg)}
 .auth-card{width:min(100%,420px);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 12px 35px #16211d18}
-.auth-card h1{font:700 25px var(--display);margin:0 0 5px}
+.auth-card h1{font:700 calc(var(--text-scale, 1) * 25px) var(--display);margin:0 0 5px}
 .auth-card p{color:var(--muted);margin:0 0 18px}
 .auth-form{display:grid;gap:12px}
-.auth-form label{display:grid;gap:5px;font-weight:600;font-size:13px}
+.auth-form label{display:grid;gap:5px;font-weight:600;font-size:calc(var(--text-scale, 1) * 13px)}
 .auth-form input,.dialog-form input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .password-control{display:flex;gap:7px;align-items:center}
 .password-control input{min-width:0;flex:1}
 .password-toggle{flex:none;padding:8px 10px}
-.password-rules{font-size:12px;color:var(--muted);font-weight:400}
+.password-rules{font-size:calc(var(--text-scale, 1) * 12px);color:var(--muted);font-weight:400}
 .password-rules ul{padding-left:18px;margin:4px 0}
 .password-rules li{margin:2px 0}
 .password-rules li.valid{color:var(--ok)}
-.auth-error{min-height:20px;color:var(--bad);font-size:13px}
-.auth-note{font-size:12px!important;margin:14px 0 0!important}
+.auth-error{min-height:20px;color:var(--bad);font-size:calc(var(--text-scale, 1) * 13px)}
+.auth-note{font-size:calc(var(--text-scale, 1) * 12px)!important;margin:14px 0 0!important}
+.welcome-loading{
+  position:fixed;z-index:100;inset:0;display:grid;place-items:center;padding:24px;
+  background:color-mix(in srgb,var(--bg) 88%,#000 12%);backdrop-filter:blur(5px)
+}
+.welcome-card{
+  width:min(100%,360px);display:grid;justify-items:center;gap:12px;padding:30px 24px;
+  border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--ink);
+  box-shadow:0 20px 60px #0003;text-align:center;animation:welcome-appear .35s ease-out both
+}
+.welcome-card h2{margin:0;font:700 calc(var(--text-scale, 1) * 23px)/1.2 var(--display)}
+.welcome-card p{margin:0;color:var(--muted);font-size:calc(var(--text-scale, 1) * 14px)}
+.welcome-spinner{
+  width:46px;height:46px;border:4px solid var(--line);border-top-color:var(--accent);
+  border-radius:50%;animation:welcome-spin .8s linear infinite
+}
+@keyframes welcome-spin{to{transform:rotate(360deg)}}
+@keyframes welcome-appear{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  #sync{transition:none}
+  .welcome-card{animation:none}
+  .welcome-spinner{animation:none;border-top-color:var(--accent);border-right-color:var(--accent)}
+}
 .account-tools{display:flex;align-items:center;gap:8px}
-.account-name{font-size:12px;color:var(--muted)}
+.account-name{font-size:calc(var(--text-scale, 1) * 12px);color:var(--muted)}
 .brand{position:relative}
 .menu-wrap{position:relative}
 .menu-panel{position:absolute;z-index:5;left:0;top:calc(100% + 8px);width:220px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px #16211d20}
@@ -153,34 +386,11 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:18px;li
 .account-dialog::backdrop{background:#0b1511a8}
 .dialog-content{padding:20px}
 .dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
-.dialog-head h2{font:700 21px var(--display)}
+.dialog-head h2{font:700 calc(var(--text-scale, 1) * 21px) var(--display)}
 .dialog-form{display:grid;gap:12px}
-.dialog-form label{display:grid;gap:5px;font-weight:600;font-size:13px}
+.dialog-form label{display:grid;gap:5px;font-weight:600;font-size:calc(var(--text-scale, 1) * 13px)}
 .dialog-form input{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .dialog-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
-.brand-avatar{width:48px;height:48px;display:grid;place-items:center;overflow:hidden;border:0;border-radius:50%;background:transparent;color:var(--muted);font:700 13px var(--display);cursor:pointer}
-.brand-avatar img{width:100%;height:100%;object-fit:contain}
-.curtain-slider{position:relative;overflow:hidden;isolation:isolate;margin:2px 0 16px;border:1px solid var(--line);border-radius:16px;background:#d7c8b7;box-shadow:0 6px 20px #16211d12}
-.curtain-slides{position:relative;height:clamp(245px,31vw,390px)}
-.curtain-slide{position:absolute;inset:0;display:grid;align-items:end;opacity:0;visibility:hidden;transform:scale(1.015);transition:opacity .55s ease,transform 4.5s ease,visibility .55s}
-.curtain-slide[data-active="true"]{opacity:1;visibility:visible;transform:scale(1)}
-.curtain-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.curtain-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#17211ddd 0%,#17211d9c 38%,#17211d18 76%),linear-gradient(0deg,#17211d48,transparent 58%)}
-.curtain-slide-copy{position:relative;z-index:1;max-width:640px;padding:38px clamp(22px,5vw,58px) 55px;color:#fff}
-.curtain-slide-copy span{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#EAD4B3}
-.curtain-slide-copy h2{margin:8px 0;font:700 clamp(25px,4vw,43px)/1.07 var(--display)}
-.curtain-slide-copy p{margin:0;color:#F4F0E9;font-size:15px;max-width:490px}
-.curtain-controls{position:absolute;z-index:2;right:18px;bottom:15px;display:flex;align-items:center;gap:8px}
-.curtain-control,.curtain-dot{display:grid;place-items:center;border:1px solid #ffffff85;background:#17211d80;color:#fff;cursor:pointer;backdrop-filter:blur(8px)}
-.curtain-control{width:37px;height:37px;border-radius:50%;font-size:20px}
-.curtain-control:hover,.curtain-dot:hover{background:#17211de0}
-.curtain-dots{display:flex;align-items:center;gap:6px;margin:0 5px}
-.curtain-dot{width:9px;height:9px;padding:0;border-radius:999px;transition:width .2s ease,background .2s ease}
-.curtain-dot[aria-current="true"]{width:24px;background:#fff}
-.curtain-slider:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){.curtain-slide,.curtain-dot{transition:none!important}}
-.curtain-cta{display:inline-flex;align-items:center;gap:7px;margin-top:16px;padding:9px 13px;border:1px solid #ffffffa8;border-radius:8px;background:#ffffffed;color:#173b32;font-size:13px;font-weight:700;text-decoration:none;transition:background .15s ease,transform .15s ease}
-.curtain-cta:hover{background:#fff;transform:translateY(-1px)}
 [hidden]{display:none!important}
 </style>
 
@@ -217,50 +427,30 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:18px;li
     <p class="auth-note">Data disimpan terpisah di Firebase untuk setiap akun. Data lama di browser tidak dipindahkan otomatis.</p>
   </div>
 </section>
+<section class="welcome-loading" id="welcomeLoading" role="status" aria-live="polite" aria-label="Memuat akun" hidden>
+  <div class="welcome-card">
+    <span class="welcome-spinner" aria-hidden="true"></span>
+    <h2>Welcome to Handayani Gorden</h2>
+    <p>Menyiapkan data produksi Anda…</p>
+  </div>
+</section>
 <div class="wrap" id="app" data-view="list" hidden>
   <div class="brand">
     <div class="menu-wrap">
       <button class="btn sm" id="menuToggle" type="button" aria-expanded="false" aria-controls="accountMenu">☰ Menu</button>
       <nav class="menu-panel" id="accountMenu" aria-label="Menu akun" hidden>
         <button type="button" data-menu="dashboard">Dashboard</button>
+        <button type="button" data-menu="guides">Panduan produksi</button>
         <button type="button" data-menu="profile">Ubah profil</button>
         <button type="button" data-menu="password">Ganti kata sandi</button>
         <button type="button" data-menu="logout">Keluar</button>
       </nav>
     </div>
-    <button class="brand-avatar" id="logoBtn" title="Pilih foto profil toko" aria-label="Pilih foto profil toko"><span id="logoMono">HG</span></button>
-    <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp" hidden>
-    <div><h1>Handayani Gorden</h1><p>Kontrol produksi dan pemasangan</p></div>
+    <div><h1 id="appTitle">Handayani Gorden</h1><p id="brandSubtitle">Kontrol produksi dan pemasangan</p></div>
     <div class="sp"></div>
     <div class="account-tools"><span class="account-name" id="accountName"></span><span class="pill" id="accountRole" hidden>Admin</span></div>
-    <div class="sync" id="sync" role="status"></div>
   </div>
-  <section class="curtain-slider" id="curtainSlider" aria-label="Inspirasi gorden" aria-roledescription="karusel">
-    <div class="curtain-slides" aria-live="off">
-      <article class="curtain-slide" data-slide="0" data-active="true" aria-hidden="false">
-        <img src="curtain-slide-1.svg" alt="Ilustrasi ruang keluarga bernuansa hangat dengan gorden berwarna krem">
-        <div class="curtain-slide-copy"><span>Handayani Gorden · Semarang</span><h2>Suasana baru, dimulai dari jendela.</h2><p>Pilih gorden yang mempercantik ruang dan membuat rumah terasa lebih nyaman.</p><a class="curtain-cta" href="https://www.instagram.com/handayanigordensemarang/" target="_blank" rel="noopener noreferrer">Lihat inspirasi di Instagram <span aria-hidden="true">↗</span></a></div>
-      </article>
-      <article class="curtain-slide" data-slide="1" data-active="false" aria-hidden="true">
-        <img src="curtain-slide-2.svg" alt="Ilustrasi ruang minimalis dengan gorden putih dan vitrase">
-        <div class="curtain-slide-copy"><span>Handayani Gorden · Semarang</span><h2>Cahaya pas, privasi tetap terjaga.</h2><p>Padukan gorden dan vitrase untuk suasana bersih yang tetap nyaman.</p><a class="curtain-cta" href="https://www.instagram.com/handayanigordensemarang/" target="_blank" rel="noopener noreferrer">Lihat inspirasi di Instagram <span aria-hidden="true">↗</span></a></div>
-      </article>
-      <article class="curtain-slide" data-slide="2" data-active="false" aria-hidden="true">
-        <img src="curtain-slide-3.svg" alt="Ilustrasi interior elegan dengan gorden warna dusty rose">
-        <div class="curtain-slide-copy"><span>Handayani Gorden · Semarang</span><h2>Detail kecil, suasana berbeda.</h2><p>Pilih warna dan bahan yang menyatu dengan karakter ruangan Anda.</p><a class="curtain-cta" href="https://www.instagram.com/handayanigordensemarang/" target="_blank" rel="noopener noreferrer">Lihat inspirasi di Instagram <span aria-hidden="true">↗</span></a></div>
-      </article>
-    </div>
-    <div class="curtain-controls" aria-label="Kontrol slide">
-      <button class="curtain-control" type="button" data-slider="previous" aria-label="Slide sebelumnya">‹</button>
-      <div class="curtain-dots">
-        <button class="curtain-dot" type="button" data-slider-index="0" aria-label="Tampilkan slide 1" aria-current="true"></button>
-        <button class="curtain-dot" type="button" data-slider-index="1" aria-label="Tampilkan slide 2" aria-current="false"></button>
-        <button class="curtain-dot" type="button" data-slider-index="2" aria-label="Tampilkan slide 3" aria-current="false"></button>
-      </div>
-      <button class="curtain-control" type="button" data-slider="next" aria-label="Slide berikutnya">›</button>
-      <button class="curtain-control" type="button" id="sliderPause" data-slider="pause" aria-label="Jeda slide otomatis" aria-pressed="false">Ⅱ</button>
-    </div>
-  </section>
+  <div class="sync" id="sync" role="status" aria-live="polite" hidden></div>
   <div id="alerts"></div>
   <div class="main">
     <aside class="side">
@@ -271,12 +461,213 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:18px;li
     </aside>
     <main class="detail" id="detail"></main>
   </div>
+  <div class="tab-page" id="tabPage" hidden>
+    <section id="schedulePage" data-page="schedule" hidden>
+      <div class="schedule-calendar" aria-label="Kalender jadwal pemasangan">
+        <div class="schedule-calendar-toolbar">
+          <button class="btn" type="button" data-calendar-month="-1" aria-label="Bulan sebelumnya">‹</button>
+          <strong id="scheduleMonthLabel"></strong>
+          <button class="btn" type="button" data-calendar-month="1" aria-label="Bulan berikutnya">›</button>
+        </div>
+        <div class="schedule-month-grid" id="scheduleCalendar"></div>
+      </div>
+      <section class="schedule-entry-section" aria-live="polite">
+        <div class="schedule-entry-heading"><h2 id="scheduleDateLabel"></h2><span id="scheduleDateCount"></span></div>
+        <div class="schedule-entries" id="scheduleEntries"></div>
+      </section>
+    </section>
+    <section id="updatesPage" data-page="updates" hidden>
+      <div class="updates-status-page">
+        <div class="my-status-container">
+          <button class="my-status-row" type="button" data-my-status>
+            <span class="status-avatar-wrap" id="myStatusAvatar"></span>
+            <span class="status-person-info"><strong>Status saya</strong><small id="myStatusSummary">Ketuk + untuk membagikan foto progres</small></span>
+          </button>
+          <button class="status-delete-button" id="deleteMyLatestStatus" type="button" data-act="delete-update" hidden>Hapus status</button>
+        </div>
+        <h2 class="status-section-title">Pembaruan terkini</h2>
+        <div class="status-list" id="recentStatuses"></div>
+        <h2 class="status-section-title">Pembaruan yang dilihat</h2>
+        <div class="status-list" id="seenStatuses"></div>
+      </div>
+      <button class="status-compose-fab" type="button" data-add-status aria-label="Tambah status foto">＋</button>
+    </section>
+    <section id="profilePage" data-page="profile" hidden>
+      <div class="profile-layout">
+        <section class="profile-card">
+          <h2>Profil akun</h2>
+          <form class="profile-form" id="fullProfileForm">
+            <div class="profile-identity">
+              <img class="profile-avatar" id="profileAvatarPreview" alt="Foto profil">
+              <button class="btn" type="button" data-profile-photo>Pilih foto profil</button>
+              <input id="profilePhotoInput" type="file" accept="image/*" capture="user" hidden>
+            </div>
+            <label for="fullProfileName">Nama tampilan<input id="fullProfileName" maxlength="80" required></label>
+            <label for="fullProfilePhone">Nomor telepon<input id="fullProfilePhone" type="tel" maxlength="30"></label>
+            <label for="fullProfileEmail">Email akun<input id="fullProfileEmail" type="email" readonly></label>
+            <div class="profile-actions">
+              <button class="btn primary" type="submit">Simpan profil</button>
+              <button class="btn" type="button" data-profile-password>Ganti kata sandi</button>
+              <button class="btn danger" type="button" data-profile-logout>Keluar</button>
+            </div>
+            <div class="auth-error" id="profileError" role="alert"></div>
+          </form>
+        </section>
+        <section class="profile-card">
+          <h2>Atur tampilan</h2>
+          <form class="profile-form" id="preferencesForm">
+            <label for="themeMode">Mode tampilan
+              <select id="themeMode"><option value="system">Ikuti perangkat</option><option value="light">Terang</option><option value="dark">Gelap</option></select>
+            </label>
+            <label for="themePreset">Preset warna
+              <select id="themePreset"><option value="green">Hijau kebun</option><option value="blue">Biru laut</option><option value="rose">Merah muda</option><option value="purple">Ungu</option><option value="warm">Hangat</option><option value="custom">Kustom</option></select>
+            </label>
+            <div class="palette-grid">
+              <label for="themeBackground">Warna latar<input id="themeBackground" type="color"></label>
+              <label for="themeCard">Warna kartu<input id="themeCard" type="color"></label>
+              <label for="themeText">Warna teks<input id="themeText" type="color"></label>
+              <label for="themeAccent">Warna aksen<input id="themeAccent" type="color"></label>
+            </div>
+            <label for="themeFont">Jenis font
+              <select id="themeFont"><option value="Public Sans">Public Sans</option><option value="system-ui">System</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Trebuchet MS">Trebuchet MS</option></select>
+            </label>
+            <label for="themeTextScale">Ukuran tampilan &amp; teks
+              <span class="text-scale-control"><input id="themeTextScale" type="range" min="80" max="130" step="5" value="100" aria-describedby="textScaleHelp"><output id="themeTextScaleValue" for="themeTextScale">100%</output></span>
+            </label>
+            <p class="hint" id="textScaleHelp">Atur ukuran teks di seluruh aplikasi, tanpa mengubah tata letak. Perubahan terlihat langsung dan disimpan setelah menekan “Simpan tampilan”.</p>
+            <p class="text-scale-preview" aria-live="polite">Contoh ukuran teks — Handayani Gorden</p>
+            <div class="profile-actions"><button class="btn primary" type="submit">Simpan tampilan</button><button class="btn" type="button" data-reset-preferences>Atur ulang</button></div>
+            <div class="auth-error" id="preferencesError" role="alert"></div>
+          </form>
+        </section>
+      </div>
+    </section>
+  </div>
+  <nav class="bottom-nav" id="bottomNav" aria-label="Navigasi utama">
+    <button type="button" data-tab="dashboard" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v12h14V9M9 21v-7h6v7"></path></svg><span>Dashboard</span></button>
+    <button type="button" data-tab="schedule" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h7"></path></svg><span>Jadwal</span></button>
+    <button type="button" data-tab="updates" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="6"></circle><path d="M12 6v.1"></path></svg><span>Pembaruan</span></button>
+    <button type="button" data-tab="profile" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg><span>Profil</span></button>
+  </nav>
   <dialog class="account-dialog" id="accountDialog" aria-labelledby="dialogTitle">
     <div class="dialog-content" id="dialogBody"></div>
   </dialog>
+  <dialog class="guide-dialog" id="guideDialog" aria-labelledby="guideDialogTitle">
+    <header class="guide-header">
+      <h2 id="guideDialogTitle">Panduan produksi</h2>
+      <button class="btn sm" type="button" data-close-guides>Tutup</button>
+    </header>
+    <div class="guide-body">
+      <div class="guide-tabs" id="guideTabs" role="tablist" aria-label="Pilihan panduan"></div>
+      <div id="guideContent"></div>
+      <form class="guide-editor" id="guideEditor" hidden>
+        <h3 id="guideEditorTitle">Tambah panduan</h3>
+        <label for="guideTitleInput">Judul panduan
+          <input id="guideTitleInput" maxlength="80" required>
+        </label>
+        <label for="guideKindInput">Jenis panduan
+          <select id="guideKindInput">
+            <option value="general">Panduan umum</option>
+            <option value="cut">Cara potong</option>
+            <option value="window-sizing">Ukuran jendela ke ukuran kain</option>
+          </select>
+        </label>
+        <label for="guideBodyInput">Isi dan langkah panduan
+          <textarea id="guideBodyInput" maxlength="5000" required></textarea>
+        </label>
+        <label>Gambar panduan
+          <input id="guideImageInput" type="file" accept="image/*" capture="environment">
+        </label>
+        <img class="guide-image" id="guideImagePreview" alt="Pratinjau gambar panduan" hidden>
+        <button class="btn" type="button" data-clear-guide-image>Hapus gambar pilihan</button>
+        <div class="guide-error" id="guideError" role="alert"></div>
+        <div class="guide-editor-actions">
+          <button class="btn" type="button" data-cancel-guide-edit>Batal</button>
+          <button class="btn primary" type="submit">Simpan panduan</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
 </div>
+<dialog class="update-dialog" id="updateDialog" aria-labelledby="updateDialogTitle">
+  <form class="update-composer" id="updateForm">
+    <header class="photo-toolbar">
+      <strong id="updateDialogTitle">Tambah status foto</strong>
+      <button class="btn" type="button" data-close-update-dialog aria-label="Tutup">Tutup</button>
+    </header>
+    <label for="updateCustomer">Customer
+      <select id="updateCustomer" required></select>
+    </label>
+    <label for="updateCaption">Keterangan
+      <textarea id="updateCaption" maxlength="500" placeholder="Ceritakan progres pekerjaan…"></textarea>
+    </label>
+    <label for="updateMentions">Tag akun
+      <select id="updateMentions" multiple size="4" aria-describedby="mentionHint"></select>
+    </label>
+    <p class="hint" id="mentionHint">Pilih maksimal 10 akun yang memiliki status aktif.</p>
+    <button class="btn" type="button" data-update-photo>Pilih foto atau ambil foto</button>
+    <input id="updatePhotoInput" type="file" accept="image/*" capture="environment" hidden>
+    <img class="update-photo-preview" id="updatePhotoPreview" alt="Pratinjau foto pembaruan" hidden>
+    <div class="auth-error" id="updateError" role="alert"></div>
+    <button class="btn primary" type="submit" id="publishUpdate" disabled>Bagikan status</button>
+    <p class="hint">Status foto terlihat oleh semua pengguna dan tersedia selama 24 jam.</p>
+  </form>
+</dialog>
+<dialog class="status-viewer" id="statusViewer" aria-label="Lihat status">
+  <div class="status-progress" id="statusProgress"></div>
+  <header class="status-viewer-top">
+    <div class="status-avatar-wrap" id="statusViewerAvatar"></div>
+    <div class="status-viewer-owner"><strong id="statusViewerOwner"></strong><small id="statusViewerTime"></small></div>
+    <button class="btn" type="button" data-close-status aria-label="Tutup status">Tutup</button>
+  </header>
+  <div class="status-viewer-photo">
+    <button class="status-viewer-nav previous" type="button" data-status-nav="-1" aria-label="Status sebelumnya"></button>
+    <img id="statusViewerImage" alt="">
+    <button class="status-viewer-nav next" type="button" data-status-nav="1" aria-label="Status berikutnya"></button>
+    <p class="status-viewer-caption" id="statusViewerCaption" hidden></p>
+  </div>
+  <div class="status-viewer-tags" id="statusViewerTags" hidden></div>
+  <footer class="status-viewer-actions">
+    <button class="btn danger" id="deleteOwnStatus" type="button" data-act="delete-update" hidden>Hapus status</button>
+  </footer>
+</dialog>
+<dialog class="photo-dialog" id="photoDialog" aria-labelledby="photoTitle">
+  <div class="photo-viewer">
+    <header class="photo-toolbar">
+      <h2 id="photoTitle"></h2>
+      <button class="btn photo-close" type="button" data-photo-close aria-label="Tutup foto">Tutup</button>
+    </header>
+    <div class="photo-viewport" id="photoViewport">
+      <img id="photoPreview" alt="">
+    </div>
+    <div class="photo-controls">
+      <button class="btn" type="button" data-zoom="out" aria-label="Perkecil foto">−</button>
+      <input id="photoZoom" type="range" min="1" max="4" step="0.1" value="1" aria-label="Perbesar atau perkecil foto">
+      <button class="btn" type="button" data-zoom="in" aria-label="Perbesar foto">+</button>
+      <output id="photoZoomValue" for="photoZoom">100%</output>
+      <button class="btn" type="button" data-zoom="reset">Ukuran pas</button>
+      <button class="btn" type="button" data-photo-camera hidden>Ambil foto</button>
+      <button class="btn" type="button" data-photo-change hidden>Pilih foto</button>
+      <button class="btn photo-delete" type="button" data-photo-delete hidden>Hapus foto</button>
+    </div>
+  </div>
+</dialog>
+<dialog class="camera-dialog" id="cameraDialog" aria-labelledby="cameraTitle">
+  <div class="camera-viewer">
+    <header class="photo-toolbar">
+      <h2 id="cameraTitle">Ambil foto customer</h2>
+      <button class="btn" type="button" data-camera-close>Tutup</button>
+    </header>
+    <video class="camera-video" id="cameraVideo" autoplay muted playsinline></video>
+    <p class="camera-error" id="cameraError" role="status">Meminta akses kamera…</p>
+    <div class="camera-actions">
+      <button class="btn" type="button" data-camera-gallery>Pilih dari galeri</button>
+      <button class="btn primary" type="button" data-camera-capture disabled>Ambil foto</button>
+    </div>
+  </div>
+</dialog>
+<input id="customerAvatarInput" type="file" accept="image/*" hidden>
 <datalist id="dl-kain"></datalist>
-<datalist id="dl-model"><option value="K3"><option value="Smokering"><option value="Riple"></datalist>
 <datalist id="dl-alasan"><option value="Kain belum ada"><option value="Masih proses jahit"><option value="Masih proses steam"><option value="Ada gorden cacat atau hilang"><option value="Permintaan customer"></datalist>
 
 <script type="module">
@@ -289,8 +680,8 @@ import {
   reauthenticateWithCredential,EmailAuthProvider,updatePassword
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import {
-  getFirestore,doc,getDoc,setDoc,deleteDoc,collection,collectionGroup,query,where,
-  onSnapshot,serverTimestamp
+  getFirestore,doc,getDoc,getDocs,setDoc,deleteDoc,collection,collectionGroup,query,where,
+  onSnapshot,serverTimestamp,orderBy,Timestamp
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 const firebaseConfig={
   apiKey:'AIzaSyA3B8N1ADikP8-A_FMqZfsjFTYYAX-PD6E',
@@ -305,17 +696,91 @@ const auth=initializeAuth(firebaseApp,{
 });
 const db=getFirestore(firebaseApp);
 const ADMIN_EMAIL='iamnoturender@gmail.com';
-const CEK=[['','Belum dicek','none'],['ready','Gorden ready','ok'],['jahit','Masih proses jahit','wip'],['steam','Masih proses steam','wip'],['belum_produksi','Belum diproduksi','wait'],['belum_kain','Belum ada kain','wait'],['cacat','Cacat','bad'],['hilang','Hilang','bad']];
+const CEK=[
+  ['belum_ada_bahan','Belum ada bahan','wait'],
+  ['sudah_ada_bahan','Sudah ada bahan','material'],
+  ['proses_potong','Proses potong','cut'],
+  ['sudah_potong','Sudah potong','cut-done'],
+  ['proses_jahit','Proses jahit','wip'],
+  ['sudah_jahit','Sudah jahit','sew-done'],
+  ['proses_setrika','Proses setrika','iron'],
+  ['sudah_setrika','Sudah setrika','iron-done'],
+  ['proses_steam','Proses steam','steam'],
+  ['sudah_steam','Sudah steam','steam-done'],
+  ['belum_cek','Belum cek','wait'],
+  ['sudah_cek','Sudah cek','checked'],
+  ['cacat','Cacat','bad'],
+  ['hilang','Hilang','bad'],
+  ['ready','Ready','ok']
+];
+const MODELS=[['K3','K3 (Kepala 3)'],['SP','SP (Smokering)'],['Poni','Poni'],['Ripple','Ripple'],['Kupu','Kupu']];
+const LEGACY_MODELS={smokering:'SP',riple:'Ripple'};
+const normalizeModel=value=>LEGACY_MODELS[String(value||'').trim().toLowerCase()]||value||'';
+const DEFAULT_PRODUCTION_GUIDES=[
+  {id:'guide-cut-k3',kind:'cut',title:'Cara potong kain K3 (Kepala 3)',body:'1. Hitung lebar kebutuhan kain menggunakan panduan ukuran jendela.\n2. Lebar potong = lebar kebutuhan kain + 10 cm.\n3. Tinggi potong = tinggi jendela + 30 cm.\n4. Tandai ukuran pada kain, periksa kembali sebelum dipotong.'},
+  {id:'guide-cut-sp',kind:'cut',title:'Cara potong kain SP (Smokering)',body:'1. Hitung lebar kebutuhan kain menggunakan panduan ukuran jendela.\n2. Lebar potong = lebar kebutuhan kain + 10 cm.\n3. Tinggi potong = tinggi jendela + 20 cm.\n4. Tandai ukuran pada kain, periksa kembali sebelum dipotong.'},
+  {id:'guide-window-sizing',kind:'window-sizing',title:'Panduan ukuran jendela menjadi ukuran kain/gorden',body:'Ukur lebar dan tinggi jendela dalam sentimeter.\nLebar kain gorden = lebar jendela × 2,5, lalu bulatkan ke kelipatan 25 cm terdekat.\nTinggi kain mengikuti tinggi jendela; tambahkan kelebihan sesuai model pada panduan potong K3 atau SP.\nPeriksa ukuran dan arah pemasangan sebelum memotong kain.'}
+];
+const LEGACY_DEFAULT_GUIDE_BODIES={
+  'guide-cut-k3':'1. Ukur lebar dan tinggi jendela dalam sentimeter.\n2. Lebar kain = lebar jendela + 10 cm.\n3. Tinggi kain = tinggi jendela + 30 cm.\n4. Tandai ukuran pada kain, periksa kembali sebelum dipotong.',
+  'guide-cut-sp':'1. Ukur lebar dan tinggi jendela dalam sentimeter.\n2. Lebar kain = lebar jendela + 10 cm.\n3. Tinggi kain = tinggi jendela + 20 cm.\n4. Tandai ukuran pada kain, periksa kembali sebelum dipotong.',
+  'guide-window-sizing':'Ukur lebar dan tinggi jendela dalam sentimeter.\nLebar kain gorden = lebar jendela × 2,5, lalu bulatkan ke kelipatan 25 cm terdekat.\nTinggi kain mengikuti tinggi jendela; tambahkan kelebihan sesuai model pada panduan potong K3 atau SP.\nPeriksa ukuran dan arah pemasangan sebelum memotong kain.'
+};
+const LEGACY_PROGRESS={belum_produksi:'belum_ada_bahan',belum_kain:'belum_ada_bahan',jahit:'proses_jahit',steam:'proses_steam'};
+const normalizeProgress=value=>LEGACY_PROGRESS[value]||value||'';
+const progressTone=value=>CEK.find(([status])=>status===normalizeProgress(value))?.[2]||'none';
 const TONE=Object.fromEntries(CEK.map(c=>[c[0],c[2]]));
+const STATUS_LABEL=Object.fromEntries(CEK.map(([status,label])=>[status,label]));
+STATUS_LABEL['']='Belum ada progres';
 const FILTERS=[['semua','Semua'],['hariini','Hari ini'],['belum','Belum ready'],['selesai','Selesai']];
-const state={customers:[],sel:null,q:'',filter:'semua',logo:null,profile:{name:'',phone:''},tunda:false,loaded:false,loadError:''};
+const DEFAULT_PREFERENCES={mode:'system',preset:'green',background:'#EEF1EF',card:'#FFFFFF',text:'#16211D',accent:'#1D5E4E',font:'Public Sans',textScale:100};
+const THEME_PRESETS={
+  green:{background:'#EEF1EF',card:'#FFFFFF',text:'#16211D',accent:'#1D5E4E'},
+  blue:{background:'#EEF2F8',card:'#FFFFFF',text:'#17243A',accent:'#285A9F'},
+  rose:{background:'#F8EFF1',card:'#FFFFFF',text:'#35232B',accent:'#A64D68'},
+  purple:{background:'#F2EFF8',card:'#FFFFFF',text:'#29233A',accent:'#6750A4'},
+  warm:{background:'#F5F0E7',card:'#FFFCF5',text:'#302A20',accent:'#8A6335'}
+};
+const today=()=>new Date().toLocaleDateString('sv');
+const state={customers:[],sel:null,q:'',filter:'semua',logo:null,profile:{name:'',phone:''},profilePhoto:'',preferences:{...DEFAULT_PREFERENCES},updates:[],productionGuides:[],selectedGuideId:'guide-window-sizing',guideEditId:null,guideDraftImage:'',activeTab:'dashboard',scheduleMonth:today().slice(0,7),selectedScheduleDate:today(),pendingUpdatePhoto:'',seenUpdateIds:new Set(),statusViewerItems:[],statusViewerIndex:0,statusViewerTimer:null,tunda:false,loaded:false,loadError:''};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const validHex=value=>/^#[0-9a-f]{6}$/i.test(value||'');
+function applyPreferences(){
+  const prefs=state.preferences,root=document.documentElement;
+  const textScale=Math.min(130,Math.max(80,Number(prefs.textScale)||100));
+  root.style.setProperty('--text-scale',String(textScale/100));
+  root.dataset.theme=['system','light','dark'].includes(prefs.mode)?prefs.mode:'system';
+  const dark=prefs.mode==='dark'||(prefs.mode==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const accent=validHex(prefs.accent)?prefs.accent:DEFAULT_PREFERENCES.accent;
+  const rgb=accent.slice(1).match(/.{2}/g).map(value=>parseInt(value,16));
+  const accentInk=(rgb[0]*299+rgb[1]*587+rgb[2]*114)/1000>150?'#06251C':'#FFFFFF';
+  const values={
+    '--bg':validHex(prefs.background)?prefs.background:DEFAULT_PREFERENCES.background,
+    '--surface':validHex(prefs.card)?prefs.card:DEFAULT_PREFERENCES.card,
+    '--ink':validHex(prefs.text)?prefs.text:DEFAULT_PREFERENCES.text,
+    '--accent':accent,
+    '--soft':dark?'#1D2A25':'#F4F7F5',
+    '--muted':dark?'#93A59D':'#5A6B64',
+    '--line':dark?'#2A3832':'#D3DAD6',
+    '--accent-ink':accentInk
+  };
+  for(const [name,value] of Object.entries(values))root.style.setProperty(name,value);
+  const font=['Public Sans','system-ui','Arial','Georgia','Trebuchet MS'].includes(prefs.font)?prefs.font:'Public Sans';
+  root.style.setProperty('--body',`"${font}", sans-serif`);
+  root.style.setProperty('--display',`"${font}", sans-serif`);
+  const scaleInput=$('#themeTextScale'),scaleOutput=$('#themeTextScaleValue');
+  if(scaleInput)scaleInput.value=String(textScale);
+  if(scaleOutput)scaleOutput.value=`${textScale}%`;
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{
+  if(state.preferences.mode==='system')applyPreferences();
+});
 let authMode='login';
 let registrationInProgress=false;
 let connectionAttempt=0;
+let syncToastTimer=0;
 const uid=()=>'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const today=()=>new Date().toLocaleDateString('sv');
 const addDays=(n)=>{const d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString('sv')};
 const dayDiff=s=>Math.round((new Date(s+'T00:00:00')-new Date(today()+'T00:00:00'))/864e5);
 const fmtDate=s=>s?new Date(s+'T00:00:00').toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short'}):'Belum dijadwalkan';
@@ -326,26 +791,66 @@ const cur=()=>state.customers.find(c=>c.id===state.sel);
 
 /* ---------- Firebase: autentikasi dan data per pengguna ---------- */
 const Store={
-  user:null,unsubscribeCustomers:null,timers:new Map(),pending:Promise.resolve(),
-  get isAdmin(){return (this.user?.email||'').toLowerCase()===ADMIN_EMAIL},
+  user:null,unsubscribeCustomers:null,unsubscribeUpdates:null,unsubscribeGuides:null,timers:new Map(),pending:Promise.resolve(),
+  get isAdmin(){return (this.user?.email||'').toLowerCase()===ADMIN_EMAIL&&this.user?.emailVerified===true},
   canEdit(customer){return !!this.user&&customer.ownerUid===this.user.uid},
   async init(user,onData){
     this.close();
     this.user=user;
+    state.productionGuides=[];
     const profileRef=doc(db,'users',user.uid),profileSnap=await getDoc(profileRef);
     if(this.user?.uid!==user.uid)return;
     if(!profileSnap.exists()){
       const name=user.displayName||user.email.split('@')[0];
       await setDoc(profileRef,{email:user.email,name,phone:'',updatedAt:serverTimestamp()});
       state.profile={name,phone:''};
+      state.profilePhoto='';
+      state.preferences={...DEFAULT_PREFERENCES};
     }else{
       const profile=profileSnap.data();
       state.profile={name:profile.name||user.displayName||'',phone:profile.phone||''};
       state.logo=typeof profile.logo==='string'?profile.logo:null;
+      state.profilePhoto=typeof profile.profilePhoto==='string'?profile.profilePhoto:'';
+      state.preferences={...DEFAULT_PREFERENCES,...(profile.preferences||{})};
     }
-    renderBrand();
+    applyPreferences();
+    const guidesRef=collection(db,'users',user.uid,'productionGuides');
+    const guidesSnapshot=await getDocs(guidesRef);
+    if(this.user?.uid!==user.uid)return;
+    const storedGuides=new Map(guidesSnapshot.docs.map(item=>[item.id,item.data()]));
+    const guideMigrations=DEFAULT_PRODUCTION_GUIDES.map(guide=>{
+      const stored=storedGuides.get(guide.id);
+      if(!stored)return setDoc(doc(guidesRef,guide.id),{
+        title:guide.title,body:guide.body,image:'',kind:guide.kind,updatedAt:serverTimestamp()
+      });
+      if(stored.body===LEGACY_DEFAULT_GUIDE_BODIES[guide.id])return setDoc(doc(guidesRef,guide.id),{
+        ...stored,title:guide.title,body:guide.body,kind:guide.kind,updatedAt:serverTimestamp()
+      });
+      return Promise.resolve();
+    });
+    await Promise.all(guideMigrations);
+    if(this.user?.uid!==user.uid)return;
+    this.unsubscribeGuides=onSnapshot(guidesRef,snapshot=>{
+      if(this.user?.uid!==user.uid)return;
+      state.productionGuides=snapshot.docs.map(item=>({...item.data(),id:item.id}));
+      if($('#guideDialog').open)renderProductionGuides();
+    },error=>{
+      if(this.user?.uid===user.uid)setSync('Gagal memuat panduan produksi: '+error.message);
+    });
+    const updatesSince=Timestamp.fromDate(new Date(Date.now()-24*60*60*1000));
+    this.unsubscribeUpdates=onSnapshot(query(
+      collection(db,'updates'),where('createdAt','>=',updatesSince),orderBy('createdAt','desc')
+    ),snapshot=>{
+      if(this.user?.uid!==user.uid)return;
+      state.updates=snapshot.docs.map(item=>({...item.data(),id:item.id}));
+      renderUpdates();
+    },error=>{
+      if(this.user?.uid===user.uid)setSync('Gagal memuat pembaruan: '+error.message);
+    });
     $('#accountName').textContent=state.profile.name||user.email;
     $('#accountRole').hidden=!this.isAdmin;
+    renderProfilePage();
+    renderUpdateCustomerOptions();
     const source=this.isAdmin
       ?query(collectionGroup(db,'customers'))
       :query(collection(db,'users',user.uid,'customers'),where('ownerUid','==',user.uid));
@@ -401,13 +906,55 @@ const Store={
   async saveProfile(profile){
     if(!this.user)throw new Error('Sesi akun sudah berakhir.');
     await setDoc(doc(db,'users',this.user.uid),{
-      email:this.user.email,name:profile.name,phone:profile.phone,logo:state.logo||'',updatedAt:serverTimestamp()
+      email:this.user.email,name:profile.name,phone:profile.phone,logo:'',
+      profilePhoto:state.profilePhoto,preferences:state.preferences,updatedAt:serverTimestamp()
     },{merge:true});
     state.profile=profile;
     $('#accountName').textContent=profile.name||this.user.email;
     setSync('Profil tersimpan di Firebase');
   },
-  saveLogo(){this.saveProfile(state.profile).catch(error=>setSync('Gagal menyimpan logo: '+error.message))},
+  async savePreferences(preferences){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    await setDoc(doc(db,'users',this.user.uid),{preferences,updatedAt:serverTimestamp()},{merge:true});
+    state.preferences=preferences;
+    applyPreferences();
+    setSync('Tampilan berhasil disimpan');
+  },
+  async saveProfilePhoto(profilePhoto){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    await setDoc(doc(db,'users',this.user.uid),{profilePhoto,updatedAt:serverTimestamp()},{merge:true});
+    state.profilePhoto=profilePhoto;
+    setSync('Foto profil berhasil disimpan');
+  },
+  async saveUpdate(update){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    await setDoc(doc(db,'updates',uid()),{
+      ...update,ownerUid:this.user.uid,ownerName:(state.profile.name||this.user.email).slice(0,80),
+      customerName:String(update.customerName).slice(0,120),createdAt:serverTimestamp()
+    });
+  },
+  async removeUpdate(updateId){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    const update=state.updates.find(item=>item.id===updateId);
+    if(!update||(!this.isAdmin&&update.ownerUid!==this.user.uid))throw new Error('Anda tidak memiliki izin untuk menghapus status ini.');
+    await deleteDoc(doc(db,'updates',updateId));
+  },
+  async saveProductionGuide(guide){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    const id=guide.id||uid();
+    if(!guide.title.trim()||!guide.body.trim())throw new Error('Judul dan isi panduan wajib diisi.');
+    if(guide.title.length>80||guide.body.length>5000)throw new Error('Judul atau isi panduan melebihi batas.');
+    if(guide.image.length>600000)throw new Error('Gambar terlalu besar. Pilih gambar lain.');
+    await setDoc(doc(db,'users',this.user.uid,'productionGuides',id),{
+      title:guide.title.trim(),body:guide.body.trim(),image:guide.image,
+      kind:guide.kind||'general',updatedAt:serverTimestamp()
+    });
+    return id;
+  },
+  async removeProductionGuide(guideId){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    await deleteDoc(doc(db,'users',this.user.uid,'productionGuides',guideId));
+  },
   async flush(){
     for(const [id,timer] of this.timers){
       clearTimeout(timer);
@@ -419,13 +966,26 @@ const Store={
   },
   close(){
     if(this.unsubscribeCustomers)this.unsubscribeCustomers();
-    this.unsubscribeCustomers=null;
+    if(this.unsubscribeUpdates)this.unsubscribeUpdates();
+    if(this.unsubscribeGuides)this.unsubscribeGuides();
+    this.unsubscribeCustomers=null;this.unsubscribeUpdates=null;this.unsubscribeGuides=null;
     for(const timer of this.timers.values())clearTimeout(timer);
     this.timers.clear();
     this.user=null;
   }
 };
-function setSync(t){const e=$('#sync');if(e)e.textContent=t}
+function setSync(t){
+  const toast=$('#sync');
+  if(!toast)return;
+  clearTimeout(syncToastTimer);
+  toast.textContent=t;
+  toast.hidden=!t;
+  toast.classList.toggle('is-visible',Boolean(t));
+  if(t)syncToastTimer=setTimeout(()=>{
+    toast.classList.remove('is-visible');
+    toast.hidden=true;
+  },t.startsWith('Gagal')?6500:3200);
+}
 function firebaseErrorMessage(error){
   if(error.code==='permission-denied'||error.code==='firestore/permission-denied')
     return 'Firestore menolak akses. Publikasikan firestore.rules untuk proyek sistem-produksi-hg, lalu coba lagi.';
@@ -475,7 +1035,8 @@ function loadAccountData(list){
   state.loaded=true;
   state.loadError='';
   if(firstLoad)state.sel=null;
-  renderAlerts();renderList();
+  renderAlerts();renderList();renderUpdateCustomerOptions();
+  if(state.activeTab==='schedule')renderSchedule();
   const focusedInDetail=$('#detail').contains(document.activeElement)&&/INPUT|SELECT/.test(document.activeElement.tagName);
   if(JSON.stringify(list)!==previous&&!focusedInDetail)renderDetail();
   else if(cur())refreshLive();
@@ -507,6 +1068,28 @@ async function submitAuth(event){
     registrationInProgress=false;
     submit.disabled=false;
   }
+}
+async function deleteCustomerPhoto(customer){
+  if(!customer||!Store.canEdit(customer)){
+    setSync('Foto hanya dapat dihapus oleh pemilik data customer.');
+    return;
+  }
+  if(!customer.avatar)return;
+  if(!confirm(`Hapus foto profil customer ${nameOf(customer)}?`))return;
+  const previous=customer.avatar,button=$('[data-photo-delete]');
+  button.disabled=true;
+  try{
+    delete customer.avatar;
+    Store.save(customer);
+    renderList();
+    await Store.flush();
+    $('#photoDialog').close();
+    setSync('Foto profil customer berhasil dihapus');
+  }catch(error){
+    customer.avatar=previous;
+    renderList();
+    setSync('Gagal menghapus foto customer: '+error.message);
+  }finally{button.disabled=false}
 }
 function authErrorMessage(error){
   const messages={
@@ -568,9 +1151,13 @@ onAuthStateChanged(auth,async user=>{
   if(registrationInProgress)return;
   if(!user){
     Store.close();
-    state.customers=[];state.logo=null;state.profile={name:'',phone:''};state.sel=null;state.loaded=false;state.loadError='';
+    state.customers=[];state.logo=null;state.profile={name:'',phone:''};state.profilePhoto='';state.preferences={...DEFAULT_PREFERENCES};state.updates=[];state.pendingUpdatePhoto='';state.sel=null;state.activeTab='dashboard';state.loaded=false;state.loadError='';
+    state.seenUpdateIds=new Set();state.statusViewerItems=[];state.productionGuides=[];closeStatusViewer();
+    applyPreferences();
+    $('#updatePhotoPreview').hidden=true;$('#updatePhotoPreview').removeAttribute('src');$('#updateCaption').value='';
+    renderUpdates();
     $('#accountRole').hidden=true;
-    renderBrand();renderAll();$('#app').hidden=true;$('#authScreen').hidden=false;
+    renderAll();$('#app').hidden=true;$('#authScreen').hidden=false;$('#welcomeLoading').hidden=true;
     return;
   }
   const usesGoogle=user.providerData.some(provider=>provider.providerId==='google.com');
@@ -582,21 +1169,36 @@ onAuthStateChanged(auth,async user=>{
 });
 async function connectUser(user){
   const attempt=++connectionAttempt;
+  const welcomeStartedAt=$('#authScreen').hidden?0:Date.now();
+  if(welcomeStartedAt)showWelcomeLoading();
   $('#authScreen').hidden=true;$('#app').hidden=false;
   state.loaded=false;state.loadError='';
   $('#list').innerHTML='<div class="empty">Menghubungkan ke Firebase…</div>';
   try{
     await Store.init(user,loadAccountData);
+    loadSeenUpdates();
+    renderUpdates();
   }catch(error){
     if(attempt!==connectionAttempt||Store.user?.uid!==user.uid)return;
     state.loadError=firebaseErrorMessage(error);
     state.loaded=false;renderList();
     setSync('Gagal menghubungkan ke Firebase: '+state.loadError);
+  }finally{
+    await finishWelcomeLoading(welcomeStartedAt);
   }
 }
 function hideAccountMenu(){
   $('#accountMenu').hidden=true;
   $('#menuToggle').setAttribute('aria-expanded','false');
+}
+function showWelcomeLoading(){
+  $('#welcomeLoading').hidden=false;
+}
+async function finishWelcomeLoading(startedAt){
+  if(!startedAt)return;
+  const remaining=900-(Date.now()-startedAt);
+  if(remaining>0)await new Promise(resolve=>setTimeout(resolve,remaining));
+  $('#welcomeLoading').hidden=true;
 }
 function openAccountDialog(kind){
   hideAccountMenu();
@@ -706,11 +1308,75 @@ document.addEventListener('click',event=>{
   if(!item)return;
   switch(item.dataset.menu){
     case 'dashboard':
-      hideAccountMenu();state.sel=null;state.q='';state.filter='semua';$('#q').value='';renderAll();window.scrollTo({top:0});break;
-    case 'profile':openAccountDialog('profile');break;
+      hideAccountMenu();state.sel=null;state.q='';state.filter='semua';$('#q').value='';setActiveTab('dashboard');renderAll();window.scrollTo({top:0});break;
+    case 'guides':
+      hideAccountMenu();state.guideEditId=null;renderProductionGuides();$('#guideDialog').showModal();break;
+    case 'profile':hideAccountMenu();setActiveTab('profile');break;
     case 'password':openAccountDialog('password');break;
     case 'logout':logout();break;
   }
+});
+$('#guideTabs').addEventListener('click',event=>{
+  const add=event.target.closest('[data-guide-add]');
+  if(add){openGuideEditor();return}
+  const tab=event.target.closest('[data-guide-select]');
+  if(!tab)return;
+  state.selectedGuideId=tab.dataset.guideSelect;
+  closeGuideEditor();
+  renderProductionGuides();
+});
+$('#guideContent').addEventListener('click',async event=>{
+  const edit=event.target.closest('[data-guide-edit]');
+  if(edit){openGuideEditor(productionGuideById(edit.dataset.guideEdit));return}
+  const remove=event.target.closest('[data-guide-delete]');
+  if(!remove)return;
+  const guide=productionGuideById(remove.dataset.guideDelete);
+  if(!guide||!confirm(`Hapus panduan "${guide.title}"?`))return;
+  try{
+    await Store.removeProductionGuide(guide.id);
+    state.productionGuides=state.productionGuides.filter(item=>item.id!==guide.id);
+    state.selectedGuideId='';
+    renderProductionGuides();
+    setSync('Panduan berhasil dihapus');
+  }catch(error){setSync('Gagal menghapus panduan: '+error.message)}
+});
+$('#guideDialog').addEventListener('click',event=>{
+  if(event.target.closest('[data-close-guides]'))$('#guideDialog').close();
+  else if(event.target.closest('[data-cancel-guide-edit]'))closeGuideEditor();
+  else if(event.target.closest('[data-clear-guide-image]')){
+    state.guideDraftImage='';
+    $('#guideImageInput').value='';
+    $('#guideImagePreview').hidden=true;
+    $('#guideImagePreview').removeAttribute('src');
+  }
+});
+$('#guideEditor').addEventListener('submit',saveProductionGuide);
+$('#guideImageInput').addEventListener('change',async event=>{
+  const input=event.currentTarget,file=input.files[0];
+  if(!file)return;
+  if(!file.type.startsWith('image/')||file.size>20*1024*1024){
+    $('#guideError').textContent='Pilih gambar dengan ukuran maksimal 20 MB.';
+    input.value='';
+    return;
+  }
+  let objectUrl='';
+  $('#guideError').textContent='Memproses gambar…';
+  try{
+    state.guideDraftImage=await new Promise((resolve,reject)=>{
+      const image=new Image();
+      objectUrl=URL.createObjectURL(file);
+      image.onload=()=>{try{resolve(encodeCustomerPhoto(image,image.naturalWidth,image.naturalHeight))}catch(error){reject(error)}};
+      image.onerror=()=>reject(new Error('File gambar tidak dapat dibuka.'));
+      image.src=objectUrl;
+    });
+    $('#guideImagePreview').src=state.guideDraftImage;
+    $('#guideImagePreview').hidden=false;
+    $('#guideError').textContent='';
+  }catch(error){$('#guideError').textContent='Gagal memproses gambar: '+error.message}
+  finally{if(objectUrl)URL.revokeObjectURL(objectUrl)}
+});
+$('#guideDialog').addEventListener('input',event=>{
+  if(event.target.matches('#windowWidthInput,#windowHeightInput,#windowCutModel'))updateWindowSizeResult();
 });
 $('#dialogBody').addEventListener('click',event=>{
   if(event.target.closest('[data-dialog-close]'))$('#accountDialog').close();
@@ -719,38 +1385,780 @@ $('#dialogBody').addEventListener('submit',event=>{
   if(event.target.id==='profileForm')saveProfile(event);
   if(event.target.id==='passwordForm')saveNewPassword(event);
 });
+$('#bottomNav').addEventListener('click',event=>{
+  const button=event.target.closest('[data-tab]');
+  if(!button)return;
+  if(button.dataset.tab==='dashboard'){
+    state.sel=null;
+    setActiveTab('dashboard');
+    renderAll();
+  }else setActiveTab(button.dataset.tab);
+});
+let tabSwipeStart=null;
+$('#app').addEventListener('touchstart',event=>{
+  if(document.querySelector('dialog[open]')||event.touches.length!==1||event.target.closest('.bottom-nav,.menu-wrap,.scroll,.guide-tabs,.alerts-track,input,textarea,select,[contenteditable="true"]')){
+    tabSwipeStart=null;
+    return;
+  }
+  const touch=event.touches[0];
+  tabSwipeStart={x:touch.clientX,y:touch.clientY};
+},{passive:true});
+$('#app').addEventListener('touchend',event=>{
+  if(!tabSwipeStart||event.changedTouches.length!==1){tabSwipeStart=null;return}
+  const touch=event.changedTouches[0],deltaX=touch.clientX-tabSwipeStart.x,deltaY=touch.clientY-tabSwipeStart.y;
+  tabSwipeStart=null;
+  if(Math.abs(deltaX)<60||Math.abs(deltaX)<Math.abs(deltaY)*1.25)return;
+  const tabs=['dashboard','schedule','updates','profile'],index=tabs.indexOf(state.activeTab);
+  const nextIndex=Math.max(0,Math.min(tabs.length-1,index+(deltaX<0?1:-1)));
+  if(nextIndex!==index)setActiveTab(tabs[nextIndex]);
+},{passive:true});
+$('#app').addEventListener('touchcancel',()=>{tabSwipeStart=null},{passive:true});
+$('#alerts').addEventListener('click',event=>{
+  const button=event.target.closest('[data-alert-index]');
+  if(!button)return;
+  const track=$('#alertsTrack'),slide=track?.children[Number(button.dataset.alertIndex)];
+  if(slide)track.scrollTo({left:slide.offsetLeft-track.offsetLeft,behavior:'smooth'});
+});
+let alertScrollFrame=0;
+$('#alerts').addEventListener('scroll',event=>{
+  if(!event.target.matches('#alertsTrack')||alertScrollFrame)return;
+  alertScrollFrame=requestAnimationFrame(()=>{
+    alertScrollFrame=0;
+    const track=$('#alertsTrack'),slides=track?[...track.children]:[];
+    if(!slides.length)return;
+    const center=track.scrollLeft+track.clientWidth/2;
+    const closest=slides.reduce((best,slide,index)=>
+      Math.abs(slide.offsetLeft+slide.clientWidth/2-center)<Math.abs(slides[best].offsetLeft+slides[best].clientWidth/2-center)?index:best,0);
+    $('#alertDots').querySelectorAll('[data-alert-index]').forEach((dot,index)=>dot.setAttribute('aria-current',String(index===closest)));
+  });
+},{passive:true,capture:true});
+$('#scheduleCalendar').addEventListener('click',event=>{
+  const day=event.target.closest('[data-schedule-date]');
+  if(day){
+    state.selectedScheduleDate=day.dataset.scheduleDate;
+    state.scheduleMonth=state.selectedScheduleDate.slice(0,7);
+    renderSchedule();
+  }
+});
+$('#schedulePage').addEventListener('click',event=>{
+  const monthButton=event.target.closest('[data-calendar-month]');
+  if(!monthButton)return;
+  const [year,month]=state.scheduleMonth.split('-').map(Number);
+  const next=new Date(year,month-1+Number(monthButton.dataset.calendarMonth),1);
+  state.scheduleMonth=`${next.getFullYear()}-${String(next.getMonth()+1).padStart(2,'0')}`;
+  state.selectedScheduleDate=`${state.scheduleMonth}-01`;
+  renderSchedule();
+});
+$('#themePreset').addEventListener('change',event=>{
+  const preset=THEME_PRESETS[event.target.value];
+  if(preset){
+    $('#themeBackground').value=preset.background;
+    $('#themeCard').value=preset.card;
+    $('#themeText').value=preset.text;
+    $('#themeAccent').value=preset.accent;
+  }
+  state.preferences=preferencesFromForm();
+  applyPreferences();
+});
+$('#preferencesForm').addEventListener('input',event=>{
+  if(event.target.matches('#themeTextScale')){
+    $('#themeTextScaleValue').value=`${event.target.value}%`;
+  }else if(!event.target.matches('input[type="color"],select'))return;
+  if(event.target.matches('input[type="color"]'))$('#themePreset').value='custom';
+  const preferences=preferencesFromForm();
+  state.preferences=preferences;
+  applyPreferences();
+});
+$('#preferencesForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const button=event.submitter,error=$('#preferencesError');
+  button.disabled=true;error.textContent='';
+  try{
+    await Store.savePreferences(preferencesFromForm());
+    $('#themePreset').value=state.preferences.preset;
+  }catch(saveError){error.textContent='Gagal menyimpan tampilan: '+saveError.message}
+  finally{button.disabled=false}
+});
+$('#preferencesForm').addEventListener('click',event=>{
+  if(!event.target.closest('[data-reset-preferences]'))return;
+  state.preferences={...DEFAULT_PREFERENCES};
+  renderProfilePage();
+  applyPreferences();
+});
+function preferencesFromForm(){
+  const preset=$('#themePreset').value;
+  return {
+    mode:$('#themeMode').value,
+    preset:['green','blue','rose','purple','warm','custom'].includes(preset)?preset:'custom',
+    background:$('#themeBackground').value,
+    card:$('#themeCard').value,
+    text:$('#themeText').value,
+    accent:$('#themeAccent').value,
+    font:$('#themeFont').value,
+    textScale:Math.min(130,Math.max(80,Number($('#themeTextScale').value)||100))
+  };
+}
+$('#fullProfileForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const button=event.submitter,error=$('#profileError');
+  button.disabled=true;error.textContent='';
+  try{
+    const name=$('#fullProfileName').value.trim();
+    if(!name)throw new Error('Nama tampilan wajib diisi.');
+    await Store.saveProfile({name,phone:$('#fullProfilePhone').value.trim()});
+    renderProfilePage();
+  }catch(saveError){error.textContent='Gagal menyimpan profil: '+saveError.message}
+  finally{button.disabled=false}
+});
+$('#fullProfileForm').addEventListener('click',event=>{
+  if(event.target.closest('[data-profile-photo]'))$('#profilePhotoInput').click();
+  else if(event.target.closest('[data-profile-password]'))openAccountDialog('password');
+  else if(event.target.closest('[data-profile-logout]'))logout();
+});
+$('#profilePhotoInput').addEventListener('change',async event=>{
+  const input=event.currentTarget,file=input.files[0];
+  input.value='';
+  if(!file)return;
+  if(!file.type.startsWith('image/')||file.size>20*1024*1024){
+    $('#profileError').textContent='Pilih gambar dengan ukuran maksimal 20 MB.';
+    return;
+  }
+  const oldPhoto=state.profilePhoto;
+  let objectUrl='';
+  try{
+    const photo=await new Promise((resolve,reject)=>{
+      const image=new Image();
+      objectUrl=URL.createObjectURL(file);
+      image.onload=()=>{try{resolve(encodeCustomerPhoto(image,image.naturalWidth,image.naturalHeight))}catch(error){reject(error)}};
+      image.onerror=()=>reject(new Error('File foto tidak dapat dibuka.'));
+      image.src=objectUrl;
+    });
+    $('#profileAvatarPreview').src=photo;
+    await Store.saveProfilePhoto(photo);
+  }catch(error){
+    state.profilePhoto=oldPhoto;
+    renderProfilePage();
+    $('#profileError').textContent='Gagal menyimpan foto profil: '+error.message;
+  }finally{if(objectUrl)URL.revokeObjectURL(objectUrl)}
+});
+$('#updateForm').addEventListener('click',event=>{
+  if(event.target.closest('[data-update-photo]'))$('#updatePhotoInput').click();
+});
+$('#updatePhotoInput').addEventListener('change',async event=>{
+  const input=event.currentTarget,file=input.files[0];
+  input.value='';
+  if(!file)return;
+  if(!file.type.startsWith('image/')||file.size>20*1024*1024){
+    $('#updateError').textContent='Pilih gambar dengan ukuran maksimal 20 MB.';
+    return;
+  }
+  let objectUrl='';
+  $('#updateError').textContent='Memproses foto…';
+  try{
+    state.pendingUpdatePhoto=await new Promise((resolve,reject)=>{
+      const image=new Image();
+      objectUrl=URL.createObjectURL(file);
+      image.onload=()=>{try{resolve(encodeCustomerPhoto(image,image.naturalWidth,image.naturalHeight))}catch(error){reject(error)}};
+      image.onerror=()=>reject(new Error('File foto tidak dapat dibuka.'));
+      image.src=objectUrl;
+    });
+    $('#updatePhotoPreview').src=state.pendingUpdatePhoto;
+    $('#updatePhotoPreview').hidden=false;
+    $('#updateError').textContent='';
+    renderUpdateCustomerOptions();
+  }catch(error){$('#updateError').textContent='Gagal memproses foto: '+error.message}
+  finally{if(objectUrl)URL.revokeObjectURL(objectUrl)}
+});
+$('#updateForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const button=$('#publishUpdate'),error=$('#updateError');
+  const customer=state.customers.find(item=>item.id===$('#updateCustomer').value);
+  const mentions=[...$('#updateMentions').selectedOptions];
+  if(!customer||!Store.canEdit(customer)||!state.pendingUpdatePhoto){
+    error.textContent='Pilih customer milik Anda dan foto terlebih dahulu.';
+    return;
+  }
+  if(mentions.length>10){
+    error.textContent='Tag maksimal 10 akun.';
+    return;
+  }
+  button.disabled=true;error.textContent='Membagikan pembaruan…';
+  try{
+    await Store.saveUpdate({
+      customerName:nameOf(customer),
+      caption:$('#updateCaption').value.trim(),
+      mentions:mentions.map(option=>({uid:option.value,name:option.textContent})),
+      photo:state.pendingUpdatePhoto
+    });
+    state.pendingUpdatePhoto='';
+    $('#updateCaption').value='';
+    $('#updatePhotoPreview').hidden=true;
+    $('#updatePhotoPreview').removeAttribute('src');
+    error.textContent='Pembaruan berhasil dibagikan.';
+    $('#updateForm').reset();
+    $('#updateDialog').close();
+    renderUpdates();
+  }catch(saveError){error.textContent='Gagal membagikan pembaruan: '+saveError.message}
+  finally{renderUpdateCustomerOptions()}
+});
+$('#updateCustomer').addEventListener('change',renderUpdateCustomerOptions);
+document.addEventListener('click',async event=>{
+  if(event.target.closest('[data-add-status]')){
+    renderUpdateCustomerOptions();
+    $('#updateError').textContent='';
+    $('#updateDialog').showModal();
+    return;
+  }
+  if(event.target.closest('[data-close-update-dialog]')){
+    $('#updateDialog').close();
+    return;
+  }
+  if(event.target.closest('[data-close-status]')){
+    closeStatusViewer();
+    return;
+  }
+  const statusNav=event.target.closest('[data-status-nav]');
+  if(statusNav){moveStatus(Number(statusNav.dataset.statusNav));return}
+  if(event.target.closest('[data-my-status]')){
+    const own=(state.updates||[]).filter(update=>update.ownerUid===Store.user?.uid&&isFreshStatus(update));
+    if(own.length)openStatusQueue(own);
+    else{
+      renderUpdateCustomerOptions();
+      $('#updateDialog').showModal();
+    }
+    return;
+  }
+  const statusPerson=event.target.closest('[data-open-status-owner]');
+  if(statusPerson){
+    const ownerId=statusPerson.dataset.openStatusOwner;
+    const updates=(state.updates||[]).filter(update=>(update.ownerUid||update.ownerName||'Pengguna')===ownerId&&isFreshStatus(update));
+    openStatusQueue(updates);
+    return;
+  }
+  const imageButton=event.target.closest('[data-update-photo-view]');
+  if(imageButton){
+    const update=state.updates.find(item=>item.id===imageButton.dataset.updatePhotoView);
+    if(update)openUpdatePhoto(update);
+    return;
+  }
+  if(event.target.closest('[data-schedule-index],[data-alert-index]'))return;
+  const deleteButton=event.target.closest('[data-act="delete-update"]');
+  if(!deleteButton)return;
+  const update=state.updates.find(item=>item.id===deleteButton.dataset.id);
+  if(!update||(!Store.isAdmin&&update.ownerUid!==Store.user?.uid))return;
+  if(!confirm(`Hapus status ${update.customerName||'foto'} milik ${update.ownerName||'pengguna'}?`))return;
+  try{
+    await Store.removeUpdate(update.id);
+    if($('#statusViewer').open)closeStatusViewer();
+  }
+  catch(error){setSync('Gagal menghapus pembaruan: '+error.message)}
+});
+$('#statusViewer').addEventListener('close',()=>{
+  clearTimeout(state.statusViewerTimer);
+  state.statusViewerTimer=null;
+});
 
 /* ---------- hitungan ---------- */
 function stats(c){
-  const o={n:0,ok:0,wip:0,wait:0,bad:0,none:0,count:{}};
-  for(const t of c.tabel||[])for(const r of t.baris)if(filled(r)){o.n++;const k=TONE[r.cek]||'none';o[k]++;o.count[r.cek]=(o.count[r.cek]||0)+1}
+  const o={n:0,ok:0,bad:0,count:{},tones:{}};
+  for(const t of c.tabel||[])for(const r of t.baris)if(filled(r)){
+    const progress=normalizeProgress(r.cek),tone=TONE[progress]||'none';
+    o.n++;
+    if(progress==='ready')o.ok++;
+    if(progress==='cacat'||progress==='hilang')o.bad++;
+    o.count[progress]=(o.count[progress]||0)+1;
+    o.tones[tone]=(o.tones[tone]||0)+1;
+  }
   return o;
 }
 function barHtml(s){
   if(!s.n)return '<div class="bar"></div>';
-  const w=k=>(s[k]/s.n*100).toFixed(1)+'%';
-  return `<div class="bar"><i class="ok" style="width:${w('ok')}"></i><i class="wip" style="width:${w('wip')}"></i><i class="wait" style="width:${w('wait')}"></i><i class="bad" style="width:${w('bad')}"></i></div>`;
+  const tones=[...new Set(CEK.map(([, ,tone])=>tone))];
+  return `<div class="bar">${tones.filter(tone=>s.tones[tone]).map(tone=>`<i class="${tone}" style="width:${(s.tones[tone]/s.n*100).toFixed(1)}%"></i>`).join('')}</div>`;
+}
+function statusBreakdownHtml(s){
+  const chips=CEK.filter(([status])=>s.count[status]).map(([status,label,tone])=>
+    `<span class="status-chip ${tone}"><span class="count">${s.count[status]}</span> ${esc(label)}</span>`
+  );
+  return chips.length?`<span class="status-breakdown" aria-label="Rincian progres">${chips.join('')}</span>`:'<span class="status-breakdown"><span class="status-chip none">Belum ada progres</span></span>';
+}
+function customerMaterialsHtml(c){
+  const tables=c.tabel||[];
+  const namesFor=jenis=>[...new Set(tables.filter(t=>t.jenis===jenis).map(t=>t.nama?.trim()).filter(Boolean))];
+  const list=names=>names.length?names.map(esc).join(', '):'Belum diisi';
+  return `<span class="customer-materials"><span>Kain: ${list(namesFor('kain'))}</span><span>Vitras: ${list(namesFor('vitras'))}</span></span>`;
 }
 const isActive=c=>c.status!=='selesai';
 const nameOf=c=>c.nama?.trim()||'Customer baru';
+function initialsOf(name){
+  return name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase()||'C';
+}
+function setPhotoZoom(value){
+  const zoom=Math.max(1,Math.min(4,Number(value)||1));
+  const slider=$('#photoZoom'),image=$('#photoPreview');
+  slider.value=String(zoom);
+  image.style.width=`${Math.min(Math.max(240,window.innerWidth*.82),900)*zoom}px`;
+  $('#photoZoomValue').value=`${Math.round(zoom*100)}%`;
+}
+function encodeCustomerPhoto(source,width,height){
+  if(!width||!height)throw new Error('Foto tidak memiliki ukuran yang valid.');
+  const maxDataLength=500*1024,qualities=[.9,.84,.78,.72];
+  for(const scale of [1,.85,.7,.55]){
+    const ratio=Math.min(1,1920/Math.max(width,height))*scale;
+    const outputWidth=Math.max(1,Math.round(width*ratio)),outputHeight=Math.max(1,Math.round(height*ratio));
+    const canvas=document.createElement('canvas');
+    canvas.width=outputWidth;canvas.height=outputHeight;
+    const context=canvas.getContext('2d');
+    if(!context)throw new Error('Browser tidak dapat memproses foto.');
+    context.drawImage(source,0,0,outputWidth,outputHeight);
+    for(const quality of qualities){
+      const photo=canvas.toDataURL('image/jpeg',quality);
+      if(photo.length<=maxDataLength)return photo;
+    }
+  }
+  throw new Error('Ukuran foto terlalu besar untuk disimpan. Coba foto lain dengan detail atau ukuran lebih kecil.');
+}
+function stopCamera(){
+  const video=$('#cameraVideo');
+  if(video.srcObject)video.srcObject.getTracks().forEach(track=>track.stop());
+  video.srcObject=null;
+  $('[data-camera-capture]').disabled=true;
+}
+async function openCustomerCamera(customer){
+  if(!customer||!Store.canEdit(customer)){setSync('Foto hanya dapat diubah oleh pemilik data customer.');return}
+  const dialog=$('#cameraDialog'),video=$('#cameraVideo'),message=$('#cameraError');
+  stopCamera();
+  dialog.dataset.customerId=customer.id;
+  message.textContent='Meminta akses kamera…';
+  dialog.showModal();
+  if(!navigator.mediaDevices?.getUserMedia){
+    message.textContent='Kamera tidak tersedia. Buka halaman melalui HTTPS dan gunakan browser yang mendukung kamera.';
+    return;
+  }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({
+      audio:false,
+      video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}
+    });
+    if(!dialog.open){stream.getTracks().forEach(track=>track.stop());return}
+    video.srcObject=stream;
+    await video.play();
+    $('[data-camera-capture]').disabled=false;
+    message.textContent='Kamera siap. Resolusi terbaik perangkat akan digunakan.';
+  }catch(error){
+    stopCamera();
+    message.textContent=error.name==='NotAllowedError'
+      ?'Izin kamera ditolak. Izinkan kamera di pengaturan browser lalu coba lagi.'
+      :error.name==='NotFoundError'
+        ?'Kamera tidak ditemukan di perangkat ini.'
+        :'Kamera tidak dapat dibuka. Pastikan kamera tidak sedang digunakan aplikasi lain.';
+  }
+}
+async function saveCustomerPhoto(customer,photo){
+  const previous=customer.avatar;
+  try{
+    customer.avatar=photo;
+    Store.save(customer);
+    renderList();
+    await Store.flush();
+    setSync('Foto customer tersimpan');
+    return true;
+  }catch(error){
+    if(previous)customer.avatar=previous;
+    else delete customer.avatar;
+    renderList();
+    setSync('Gagal menyimpan foto customer: '+error.message);
+    return false;
+  }
+}
+function openCustomerPhoto(customer){
+  if(!customer?.avatar)return;
+  const image=$('#photoPreview');
+  $('#photoTitle').textContent=nameOf(customer);
+  image.src=customer.avatar;
+  image.alt=`Foto ${nameOf(customer)}`;
+  const canEdit=Store.canEdit(customer);
+  $('[data-photo-camera]').hidden=!canEdit;
+  $('[data-photo-change]').hidden=!canEdit;
+  $('[data-photo-delete]').hidden=!canEdit;
+  $('[data-zoom="out"]').hidden=false;
+  $('#photoZoom').hidden=false;
+  $('[data-zoom="in"]').hidden=false;
+  $('#photoZoomValue').hidden=false;
+  $('[data-zoom="reset"]').hidden=false;
+  $('#customerAvatarInput').dataset.customerId=customer.id;
+  $('#photoDialog').dataset.customerId=customer.id;
+  setPhotoZoom(1);
+  $('#photoDialog').showModal();
+}
+function openUpdatePhoto(update){
+  $('#photoTitle').textContent=`${update.customerName} · ${update.ownerName}`;
+  const image=$('#photoPreview');
+  image.src=update.photo;
+  image.alt=`Pembaruan ${update.customerName}`;
+  $('[data-photo-camera]').hidden=true;
+  $('[data-photo-change]').hidden=true;
+  $('[data-photo-delete]').hidden=true;
+  $('[data-zoom="out"]').hidden=false;
+  $('#photoZoom').hidden=false;
+  $('[data-zoom="in"]').hidden=false;
+  $('#photoZoomValue').hidden=false;
+  $('[data-zoom="reset"]').hidden=false;
+  setPhotoZoom(1);
+  $('#photoDialog').showModal();
+}
+function updateTabVisibility(){
+  const tab=state.activeTab;
+  const tabTitles={dashboard:'Dashboard',schedule:'Jadwal',updates:'Pembaruan',profile:'Profil'};
+  $('#app').dataset.activeTab=tab;
+  $('#appTitle').textContent=tabTitles[tab]||tabTitles.dashboard;
+  $('#brandSubtitle').hidden=tab!=='dashboard';
+  $('#accountName').parentElement.hidden=tab!=='dashboard';
+  $('#alerts').hidden=tab!=='dashboard';
+  $('.main').hidden=tab!=='dashboard';
+  $('#tabPage').hidden=tab==='dashboard';
+  document.querySelectorAll('[data-page]').forEach(page=>{page.hidden=page.dataset.page!==tab});
+  document.querySelectorAll('[data-tab]').forEach(button=>{
+    button.setAttribute('aria-current',button.dataset.tab===tab?'page':'false');
+  });
+}
+function setActiveTab(tab){
+  if(!['dashboard','schedule','updates','profile'].includes(tab))return;
+  if(cur()&&tab!=='dashboard'&&Store.canEdit(cur()))saveCurrentCustomer();
+  const tabs=['dashboard','schedule','updates','profile'];
+  const oldIndex=tabs.indexOf(state.activeTab),newIndex=tabs.indexOf(tab);
+  if(oldIndex!==newIndex)$('#app').dataset.tabDirection=newIndex>oldIndex?'next':'previous';
+  state.activeTab=tab;
+  updateTabVisibility();
+  if(tab==='schedule')renderSchedule();
+  if(tab==='updates'){renderUpdateCustomerOptions();renderUpdates()}
+  if(tab==='profile')renderProfilePage();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderSchedule(){
+  const calendar=$('#scheduleCalendar'),entriesElement=$('#scheduleEntries');
+  if(!calendar||!entriesElement)return;
+  const [year,month]=state.scheduleMonth.split('-').map(Number);
+  const firstDay=new Date(year,month-1,1);
+  const daysInMonth=new Date(year,month,0).getDate();
+  const offset=(firstDay.getDay()+6)%7;
+  const monthEntries=state.customers.filter(customer=>
+    typeof customer.jadwal==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(customer.jadwal)
+  );
+  const counts=new Map();
+  for(const customer of monthEntries)counts.set(customer.jadwal,(counts.get(customer.jadwal)||0)+1);
+  $('#scheduleMonthLabel').textContent=firstDay.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+  const weekdays=['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+  const weekdayMarkup=weekdays.map(day=>`<span class="schedule-weekday">${day}</span>`).join('');
+  const cellCount=Math.ceil((offset+daysInMonth)/7)*7;
+  let dayMarkup='';
+  for(let cell=0;cell<cellCount;cell++){
+    const dayNumber=cell-offset+1;
+    if(dayNumber<1||dayNumber>daysInMonth){
+      dayMarkup+='<span aria-hidden="true"></span>';
+      continue;
+    }
+    const date=`${state.scheduleMonth}-${String(dayNumber).padStart(2,'0')}`;
+    const count=counts.get(date)||0;
+    const classes=['schedule-day'];
+    if(date===today())classes.push('today');
+    if(date===state.selectedScheduleDate)classes.push('selected');
+    const label=`${dayNumber}${count?`, ${count} jadwal`:''}`;
+    dayMarkup+=`<button class="${classes.join(' ')}" type="button" data-schedule-date="${date}" aria-label="${label}" aria-pressed="${date===state.selectedScheduleDate}"><span>${dayNumber}</span><span class="schedule-day-markers">${count?`<i></i><span class="schedule-day-count">${count}</span>`:''}</span></button>`;
+  }
+  calendar.innerHTML=weekdayMarkup+dayMarkup;
+  const selected=new Date(`${state.selectedScheduleDate}T00:00:00`);
+  $('#scheduleDateLabel').textContent=selected.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
+  const selectedEntries=monthEntries.filter(customer=>customer.jadwal===state.selectedScheduleDate)
+    .sort((a,b)=>(a.jam||'').localeCompare(b.jam||'')||nameOf(a).localeCompare(nameOf(b),'id'));
+  $('#scheduleDateCount').textContent=`${selectedEntries.length} customer`;
+  entriesElement.innerHTML=selectedEntries.length?selectedEntries.map(customer=>{
+    const statsForCustomer=stats(customer);
+    const ready=statsForCustomer.n?`${statsForCustomer.ok}/${statsForCustomer.n} ukuran ready`:'Belum ada ukuran';
+    const materials=customerMaterialsHtml(customer).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+    return `<article class="schedule-entry"><div class="schedule-entry-main"><strong>${esc(nameOf(customer))}</strong><span>${customer.jam?`Pukul ${esc(customer.jam)}`:'Waktu belum ditentukan'}</span></div><button class="btn" type="button" data-act="schedule-open" data-id="${esc(customer.id)}">Buka</button><div class="schedule-entry-meta">${esc(materials)} · ${ready}</div></article>`;
+  }).join(''):'<div class="schedule-empty">Tidak ada jadwal pada tanggal ini.</div>';
+}
+function windowMeasurementIllustration(){
+  return `<svg class="guide-illustration" viewBox="0 0 640 310" role="img" aria-label="Gambar pengukuran lebar dan tinggi jendela">
+    <rect width="640" height="310" rx="14" fill="var(--soft)"/>
+    <rect x="190" y="46" width="260" height="205" rx="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="8"/>
+    <path d="M320 49v200M194 150h252" stroke="var(--accent)" stroke-width="5"/>
+    <path d="M178 276h284m-12-10 12 10-12 10m-260-10-12-10 12 10" fill="none" stroke="#C05721" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M486 48v203m-10-12 10 12 10-12m-10-171-10-12 10 12 10-12" fill="none" stroke="#5B55A5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="320" y="301" text-anchor="middle" fill="var(--ink)" font-size="17" font-family="sans-serif">Lebar jendela × 2,5 → lebar kain</text>
+    <text x="530" y="155" text-anchor="middle" fill="var(--ink)" font-size="16" font-family="sans-serif" transform="rotate(90 530 155)">Tinggi jendela</text>
+  </svg>`;
+}
+function productionGuideById(id){
+  return state.productionGuides.find(guide=>guide.id===id)||null;
+}
+function renderProductionGuides(){
+  const guides=[...state.productionGuides].sort((a,b)=>
+    (DEFAULT_PRODUCTION_GUIDES.findIndex(item=>item.id===a.id)+1||99)-
+    (DEFAULT_PRODUCTION_GUIDES.findIndex(item=>item.id===b.id)+1||99)||
+    String(a.title||'').localeCompare(String(b.title||''),'id')
+  );
+  if(!guides.length){
+    $('#guideTabs').innerHTML='';
+    $('#guideContent').innerHTML='<div class="schedule-empty">Belum ada panduan produksi. Tambahkan panduan untuk memulai.</div>';
+    return;
+  }
+  if(!guides.some(guide=>guide.id===state.selectedGuideId))state.selectedGuideId=guides[0].id;
+  $('#guideTabs').innerHTML=guides.map(guide=>
+    `<button class="guide-tab" type="button" role="tab" data-guide-select="${esc(guide.id)}" aria-selected="${guide.id===state.selectedGuideId}" aria-pressed="${guide.id===state.selectedGuideId}">${esc(guide.title)}</button>`
+  ).join('')+'<button class="guide-tab" type="button" data-guide-add>＋ Tambah panduan</button>';
+  const guide=productionGuideById(state.selectedGuideId);
+  if(!guide)return;
+  const calculator=guide.kind==='window-sizing'?`<section class="guide-calculator">
+      <h3>Kalkulator ukuran jendela</h3>
+      <p>Lebar kebutuhan kain dihitung 2,5× lebar jendela lalu dibulatkan ke kelipatan 25 cm terdekat. Tambahkan 10 cm lagi untuk lebar potong K3/SP.</p>
+      <label for="windowWidthInput">Lebar jendela (cm)<input id="windowWidthInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Contoh: 100"></label>
+      <label for="windowHeightInput">Tinggi jendela (cm)<input id="windowHeightInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Contoh: 200"></label>
+      <label for="windowCutModel">Model untuk tambahan tinggi
+        <select id="windowCutModel"><option value="K3">K3 (tambah 30 cm)</option><option value="SP">SP / Smokering (tambah 20 cm)</option></select>
+      </label>
+      <div class="guide-result" id="windowSizeResult" aria-live="polite">Masukkan ukuran jendela untuk melihat hasil.</div>
+    </section>`:'';
+  const illustration=guide.kind==='window-sizing'?windowMeasurementIllustration():'';
+  const extraImage=guide.image?`<img class="guide-image" src="${esc(guide.image)}" alt="Gambar panduan ${esc(guide.title)}">`:'';
+  const canDelete=!DEFAULT_PRODUCTION_GUIDES.some(item=>item.id===guide.id);
+  $('#guideContent').innerHTML=`<div class="guide-content${calculator?' has-calculator':''}">
+      <article class="guide-card"><h3>${esc(guide.title)}</h3><p class="guide-copy">${esc(guide.body||'')}</p>${illustration}${extraImage}
+        <div class="guide-actions"><button class="btn" type="button" data-guide-edit="${esc(guide.id)}">Ubah panduan</button>${canDelete?`<button class="btn danger" type="button" data-guide-delete="${esc(guide.id)}">Hapus panduan</button>`:''}</div>
+      </article>${calculator}
+    </div>`;
+  $('#guideEditor').hidden=state.guideEditId===null;
+  if(calculator)updateWindowSizeResult();
+}
+function updateWindowSizeResult(){
+  const result=$('#windowSizeResult'),width=Number($('#windowWidthInput')?.value),height=Number($('#windowHeightInput')?.value);
+  if(!result)return;
+  if(!(width>0)||!(height>0)){
+    result.textContent='Masukkan ukuran jendela untuk melihat hasil.';
+    return;
+  }
+  const rawWidth=width*2.5,roundedWidth=Math.round(rawWidth/25)*25,cutWidth=roundedWidth+10;
+  const extra=$('#windowCutModel').value==='SP'?20:30,cutHeight=height+extra;
+  const format=value=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:1}).format(value);
+  result.innerHTML=`Lebar kebutuhan: <strong>${format(rawWidth)} cm → ${format(roundedWidth)} cm (${format(roundedWidth/100)} m)</strong><br>Lebar potong K3/SP (+10 cm): <strong>${format(cutWidth)} cm</strong><br>Tinggi potong ${$('#windowCutModel').value}: <strong>${format(height)} + ${extra} = ${format(cutHeight)} cm</strong>`;
+}
+function openGuideEditor(guide=null){
+  state.guideEditId=guide?.id||'';
+  state.guideDraftImage=guide?.image||'';
+  $('#guideEditorTitle').textContent=guide?'Ubah panduan':'Tambah panduan';
+  $('#guideTitleInput').value=guide?.title||'';
+  $('#guideKindInput').value=guide?.kind||'general';
+  $('#guideBodyInput').value=guide?.body||'';
+  $('#guideImageInput').value='';
+  $('#guideImagePreview').hidden=!state.guideDraftImage;
+  $('#guideImagePreview').src=state.guideDraftImage||'';
+  $('#guideError').textContent='';
+  $('#guideEditor').hidden=false;
+  $('#guideTitleInput').focus();
+}
+function closeGuideEditor(){
+  state.guideEditId=null;
+  state.guideDraftImage='';
+  $('#guideEditor').reset();
+  $('#guideImagePreview').hidden=true;
+  $('#guideImagePreview').removeAttribute('src');
+  $('#guideError').textContent='';
+  $('#guideEditor').hidden=true;
+}
+async function saveProductionGuide(event){
+  event.preventDefault();
+  const button=event.submitter,error=$('#guideError');
+  button.disabled=true;error.textContent='';
+  try{
+    const savedGuide={
+      id:state.guideEditId||undefined,
+      title:$('#guideTitleInput').value,
+      body:$('#guideBodyInput').value,
+      image:state.guideDraftImage,
+      kind:$('#guideKindInput').value
+    };
+    const id=await Store.saveProductionGuide(savedGuide);
+    state.productionGuides=state.productionGuides.filter(guide=>guide.id!==id);
+    state.productionGuides.push({...savedGuide,id,title:savedGuide.title.trim(),body:savedGuide.body.trim()});
+    state.selectedGuideId=id;
+    closeGuideEditor();
+    renderProductionGuides();
+    setSync('Panduan produksi berhasil disimpan');
+  }catch(saveError){error.textContent='Gagal menyimpan panduan: '+saveError.message}
+  finally{button.disabled=false}
+}
+function renderUpdateCustomerOptions(){
+  const select=$('#updateCustomer');
+  if(!select)return;
+  const previous=select.value;
+  select.innerHTML=state.customers.filter(customer=>Store.canEdit(customer)).map(customer=>`<option value="${esc(customer.id)}">${esc(nameOf(customer))}</option>`).join('');
+  if(state.customers.some(customer=>Store.canEdit(customer)&&customer.id===previous))select.value=previous;
+  $('#publishUpdate').disabled=!select.value||!state.pendingUpdatePhoto;
+  renderMentionOptions();
+}
+function renderMentionOptions(){
+  const select=$('#updateMentions');
+  if(!select)return;
+  const previous=new Set([...select.selectedOptions].map(option=>option.value));
+  const accounts=new Map();
+  for(const update of state.updates||[]){
+    if(!isFreshStatus(update)||!update.ownerUid)continue;
+    accounts.set(update.ownerUid,update.ownerName||'Pengguna');
+  }
+  if(Store.user)accounts.set(Store.user.uid,state.profile.name||Store.user.email||'Akun saya');
+  select.innerHTML=[...accounts].sort((a,b)=>a[1].localeCompare(b[1],'id')).map(([uid,name])=>
+    `<option value="${esc(uid)}">${esc(name)}</option>`
+  ).join('');
+  for(const option of select.options)option.selected=previous.has(option.value);
+}
+function updateDate(update){
+  const date=update.createdAt?.toDate?update.createdAt.toDate():new Date(update.createdAt||0);
+  return Number.isNaN(date.getTime())?new Date():date;
+}
+function isFreshStatus(update){
+  const age=Date.now()-updateDate(update).getTime();
+  return age>=0&&age<24*60*60*1000&&Boolean(update.photo);
+}
+function loadSeenUpdates(){
+  const key=`handayani-status-seen-v1:${Store.user?.uid||'guest'}`;
+  try{
+    const saved=JSON.parse(localStorage.getItem(key)||'[]');
+    state.seenUpdateIds=new Set(Array.isArray(saved)?saved.filter(id=>typeof id==='string'):[]);
+  }catch(error){
+    state.seenUpdateIds=new Set();
+    setSync('Gagal memuat riwayat status yang dilihat: '+error.message);
+  }
+}
+function markStatusSeen(update){
+  if(state.seenUpdateIds.has(update.id))return;
+  state.seenUpdateIds.add(update.id);
+  const key=`handayani-status-seen-v1:${Store.user?.uid||'guest'}`;
+  try{localStorage.setItem(key,JSON.stringify([...state.seenUpdateIds]))}
+  catch(error){setSync('Gagal menyimpan status yang dilihat: '+error.message)}
+}
+function updateAvatarMarkup(name,photo='',ring=''){
+  const avatar=photo
+    ?`<img src="${esc(photo)}" alt="">`
+    :`<span class="status-avatar-initials">${esc(initialsOf(name||'Pengguna'))}</span>`;
+  return `<span class="status-avatar-wrap ${ring}">${avatar}</span>`;
+}
+function statusTimeLabel(update){
+  const minutes=Math.max(0,Math.floor((Date.now()-updateDate(update).getTime())/60000));
+  if(minutes<1)return 'Baru saja';
+  if(minutes<60)return `${minutes} menit lalu`;
+  const hours=Math.floor(minutes/60);
+  if(hours<24)return `${hours} jam lalu`;
+  return updateDate(update).toLocaleDateString('id-ID',{day:'numeric',month:'short'});
+}
+function openStatusQueue(updates){
+  if(!updates.length)return;
+  state.statusViewerItems=[...updates].sort((a,b)=>updateDate(a)-updateDate(b));
+  state.statusViewerIndex=0;
+  renderStatusViewer();
+  $('#statusViewer').showModal();
+}
+function renderStatusViewer(){
+  const updates=state.statusViewerItems,update=updates[state.statusViewerIndex];
+  if(!update)return;
+  markStatusSeen(update);
+  $('#statusProgress').innerHTML=updates.map((item,index)=>`<span data-seen="${index<=state.statusViewerIndex}"></span>`).join('');
+  const viewerAvatar=$('#statusViewerAvatar');
+  viewerAvatar.innerHTML=update.ownerUid===Store.user?.uid&&state.profilePhoto
+    ?`<img src="${esc(state.profilePhoto)}" alt="">`
+    :`<span class="status-avatar-initials">${esc(initialsOf(update.ownerName||'Pengguna'))}</span>`;
+  $('#statusViewerOwner').textContent=update.ownerUid===Store.user?.uid?'Status saya':(update.ownerName||'Pengguna');
+  $('#statusViewerTime').textContent=`${update.customerName||'Customer'} · ${statusTimeLabel(update)}`;
+  $('#statusViewerImage').src=update.photo||'';
+  $('#statusViewerImage').alt=`Status ${update.customerName||'customer'}`;
+  $('#statusViewerCaption').textContent=update.caption||'';
+  $('#statusViewerCaption').hidden=!update.caption;
+  $('#deleteOwnStatus').hidden=!Store.isAdmin&&update.ownerUid!==Store.user?.uid;
+  $('#deleteOwnStatus').dataset.id=update.id;
+  const tags=$('#statusViewerTags');
+  const accounts=new Map((state.updates||[]).map(item=>[item.ownerUid,item.ownerName||'Pengguna']));
+  const mentions=Array.isArray(update.mentions)?update.mentions:[];
+  const names=mentions.map(mention=>typeof mention==='string'?accounts.get(mention):mention?.name).filter(Boolean);
+  tags.innerHTML=names.map(name=>`<span>@${esc(name)}</span>`).join('');
+  tags.hidden=!names.length;
+  renderUpdates();
+  clearTimeout(state.statusViewerTimer);
+  state.statusViewerTimer=setTimeout(()=>moveStatus(1),5000);
+}
+function moveStatus(direction){
+  const next=state.statusViewerIndex+direction;
+  if(next<0)return;
+  if(next>=state.statusViewerItems.length){closeStatusViewer();return}
+  state.statusViewerIndex=next;
+  renderStatusViewer();
+}
+function closeStatusViewer(){
+  clearTimeout(state.statusViewerTimer);
+  state.statusViewerTimer=null;
+  if($('#statusViewer').open)$('#statusViewer').close();
+}
+function renderUpdates(){
+  const recent=$('#recentStatuses'),seen=$('#seenStatuses'),avatar=$('#myStatusAvatar');
+  if(!recent||!seen||!avatar)return;
+  const fresh=(state.updates||[]).filter(isFreshStatus).sort((a,b)=>updateDate(b)-updateDate(a));
+  const own=fresh.filter(update=>update.ownerUid===Store.user?.uid);
+  const ownLatest=own[0];
+  avatar.className=`status-avatar-wrap ${own.length?(own.some(update=>!state.seenUpdateIds.has(update.id))?'unseen':'seen'):''}`;
+  avatar.innerHTML=state.profilePhoto?`<img src="${esc(state.profilePhoto)}" alt="">`:`<span class="status-avatar-initials">${esc(initialsOf(state.profile.name||Store.user?.email||'U'))}</span>`;
+  const plus=document.createElement('span');
+  plus.className='status-add-badge';plus.textContent='+';
+  avatar.append(plus);
+  $('#myStatusSummary').textContent=ownLatest
+    ?`${own.length} status · Terakhir ${statusTimeLabel(ownLatest)}`
+    :'Ketuk + untuk membagikan foto progres';
+  const deleteMyLatest=$('#deleteMyLatestStatus');
+  deleteMyLatest.hidden=!ownLatest;
+  deleteMyLatest.dataset.id=ownLatest?.id||'';
+  const groups=new Map();
+  for(const update of fresh){
+    if(update.ownerUid===Store.user?.uid)continue;
+    const key=update.ownerUid||update.ownerName||'Pengguna';
+    if(!groups.has(key))groups.set(key,{key,name:update.ownerName||'Pengguna',updates:[]});
+    groups.get(key).updates.push(update);
+  }
+  const people=[...groups.values()].map(group=>({...group,unseen:group.updates.some(update=>!state.seenUpdateIds.has(update.id))}));
+  const makeRows=(items,emptyMessage)=>items.length?items.map(group=>{
+    const latest=group.updates[0];
+    const deleteButton=Store.isAdmin?`<button class="status-delete-button" type="button" data-act="delete-update" data-id="${esc(latest.id)}" aria-label="Hapus status terbaru milik ${esc(group.name)}">Hapus status</button>`:'';
+    return `<div class="status-person-row"><button class="status-person" type="button" data-open-status-owner="${esc(group.key)}">${updateAvatarMarkup(group.name,'',group.unseen?'unseen':'seen')}<span class="status-person-info"><strong>${esc(group.name)}</strong><small>${group.updates.length} status · ${statusTimeLabel(latest)}</small></span></button>${deleteButton}</div>`;
+  }).join(''):`<p class="status-section-empty">${emptyMessage}</p>`;
+  recent.innerHTML=makeRows(people.filter(group=>group.unseen),'Tidak ada pembaruan baru.');
+  seen.innerHTML=makeRows(people.filter(group=>!group.unseen),'Belum ada status yang dilihat.');
+}
+function renderProfilePage(){
+  if(!Store.user)return;
+  $('#fullProfileName').value=state.profile.name||'';
+  $('#fullProfilePhone').value=state.profile.phone||'';
+  $('#fullProfileEmail').value=Store.user.email||'';
+  $('#profileAvatarPreview').src=state.profilePhoto||`data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="#DDE8E2"/><text x="40" y="48" text-anchor="middle" font-family="sans-serif" font-size="26" fill="#1D5E4E">${esc(initialsOf(state.profile.name||Store.user.email||'U'))}</text></svg>`)}`;
+  $('#themeMode').value=state.preferences.mode;
+  $('#themePreset').value=state.preferences.preset;
+  $('#themeBackground').value=validHex(state.preferences.background)?state.preferences.background:DEFAULT_PREFERENCES.background;
+  $('#themeCard').value=validHex(state.preferences.card)?state.preferences.card:DEFAULT_PREFERENCES.card;
+  $('#themeText').value=validHex(state.preferences.text)?state.preferences.text:DEFAULT_PREFERENCES.text;
+  $('#themeAccent').value=validHex(state.preferences.accent)?state.preferences.accent:DEFAULT_PREFERENCES.accent;
+  $('#themeFont').value=state.preferences.font;
+  $('#themeTextScale').value=String(Math.min(130,Math.max(80,Number(state.preferences.textScale)||100)));
+  $('#themeTextScaleValue').value=`${$('#themeTextScale').value}%`;
+}
 
 /* ---------- tampilan ---------- */
-function renderBrand(){
-  const b=$('#logoBtn');
-  const image=state.logo||'handayani-h-mark.png';
-  b.innerHTML=`<img src="${esc(image)}" alt="Logo H Handayani Gorden dengan latar transparan">`;
-}
 function renderAlerts(){
-  const items=state.customers.filter(c=>isActive(c)&&c.jadwal&&dayDiff(c.jadwal)<=1).sort((a,b)=>a.jadwal.localeCompare(b.jadwal));
+  const items=state.customers.filter(c=>isActive(c)&&c.jadwal).sort((a,b)=>a.jadwal.localeCompare(b.jadwal));
   const el=$('#alerts');
-  if(!items.length){el.innerHTML='<div class="alerts-empty">Pengingat: tidak ada pemasangan terjadwal hari ini atau besok.</div>';return}
-  el.innerHTML='<div class="alerts">'+items.map(c=>{
+  if(!items.length){el.innerHTML='<div class="alerts-empty">Tidak ada jadwal pemasangan. Atur tanggal dari detail customer.</div>';return}
+  el.innerHTML=`<div class="alerts"><div class="alerts-track" id="alertsTrack" aria-label="Geser pengingat jadwal customer">${items.map(c=>{
     const d=dayDiff(c.jadwal),s=stats(c);
-    const cls=d<0?'late':d===0?'today':'tomorrow',when=d<0?`Terlewat ${-d} hari`:d===0?'Hari ini':'Besok';
+    const cls=d<0?'late':d===0?'today':'tomorrow',when=d<0?`Terlambat ${-d} hari`:d===0?'Hari ini':d===1?'Besok':fmtDate(c.jadwal);
     const left=s.n-s.ok;
     const st=!s.n?'<span class="st warn">Belum ada ukuran diisi</span>':left===0?`<span class="st good">Semua ${s.n} ready, siap pasang</span>`:`<span class="st warn">${left} dari ${s.n} belum ready${s.bad?`, ${s.bad} cacat/hilang`:''}</span>`;
     return `<button class="alert ${cls}" data-act="open" data-id="${c.id}"><span class="when">${when}${c.jam?' · '+esc(c.jam):''}</span><b>${esc(nameOf(c))}</b>${st}</button>`;
-  }).join('')+'</div>';
+  }).join('')}</div><div class="alert-dots" id="alertDots">${items.map((item,index)=>`<button class="alert-dot" type="button" data-alert-index="${index}" aria-label="Tampilkan jadwal ${index+1} untuk ${esc(nameOf(item))}" aria-current="${index===0?'true':'false'}"></button>`).join('')}</div></div>`;
 }
 function matchFilter(c){
   const q=state.q.trim().toLowerCase();
@@ -778,28 +2186,39 @@ function renderList(){
   el.innerHTML=rows.map(c=>{
     const s=stats(c);
     const tag=c.status==='selesai'?'Selesai':c.status==='ditunda'?'Ditunda':'';
-    return `<button class="item" data-act="open" data-id="${c.id}" aria-current="${c.id===state.sel}">
-      <span class="r1"><b>${esc(nameOf(c))}</b><span class="dt">${esc(c.jadwal?fmtDate(c.jadwal):'Belum dijadwalkan')}</span></span>
+    const canEdit=Store.canEdit(c);
+    const avatar=c.avatar?`<img src="${esc(c.avatar)}" alt="">`:esc(initialsOf(nameOf(c)));
+    const canOpenAvatar=canEdit||!!c.avatar;
+    return `<div class="item" data-act="open" data-id="${c.id}" aria-current="${c.id===state.sel}" role="button" tabindex="0" aria-label="Buka data ${esc(nameOf(c))}">
+      <span class="r1"><span class="customer-main"><button class="customer-avatar" type="button" data-act="customer-avatar" data-id="${c.id}" aria-label="${c.avatar?'Lihat':'Pilih'} foto ${esc(nameOf(c))}"${canOpenAvatar?'':' disabled'}>${avatar}</button><span class="customer-heading"><b>${esc(nameOf(c))}</b>${customerMaterialsHtml(c)}</span></span><span class="dt">${esc(c.jadwal?fmtDate(c.jadwal):'Belum dijadwalkan')}</span></span>
       ${barHtml(s)}
+      ${statusBreakdownHtml(s)}
       <span class="r2"><span>${s.ok}/${s.n} ready</span><span>${s.bad?`<span style="color:var(--bad);font-weight:600">${s.bad} bermasalah</span> `:''}${tag}</span></span>
-      ${Store.isAdmin&&c.ownerUid!==Store.user.uid?`<span class="hint">Akun: ${esc(c.ownerEmail||'pengguna lain')} · hanya lihat</span>`:''}</button>`;
+      ${Store.isAdmin&&c.ownerUid!==Store.user.uid?`<span class="hint">Akun: ${esc(c.ownerEmail||'pengguna lain')} · hanya lihat</span>`:''}</div>`;
   }).join('');
 }
-function cekSelect(t,i,val){
-  return `<select class="cek ${TONE[val]||'none'}" data-t="${t}" data-r="${i}" data-k="cek" aria-label="Cek gorden">${CEK.map(c=>`<option value="${c[0]}"${c[0]===val?' selected':''}>${c[1]}</option>`).join('')}</select>`;
+function progressSelect(t,i,val){
+  const progress=normalizeProgress(val);
+  return `<select class="progress-select ${progressTone(progress)}" data-t="${t}" data-r="${i}" data-k="cek" aria-label="Progres gorden baris ${i+1}"><option value=""${progress?'':' selected'}>Pilih progres</option>${CEK.map(([status,label])=>`<option value="${status}"${status===progress?' selected':''}>${label}</option>`).join('')}</select>`;
+}
+function modelSelect(t,i,val){
+  const model=normalizeModel(val);
+  const known=MODELS.some(([value])=>value===model);
+  const legacyOption=model&&!known?`<option value="${esc(model)}" selected>${esc(model)} (nilai lama)</option>`:'';
+  return `<select class="model-select" data-t="${t}" data-r="${i}" data-k="model" aria-label="Model gorden baris ${i+1}"><option value=""${model?'':' selected'}>Pilih model</option>${legacyOption}${MODELS.map(([value,label])=>`<option value="${value}"${value===model?' selected':''}>${label}</option>`).join('')}</select>`;
 }
 function tableHtml(t){
   const rows=t.baris.map((r,i)=>`<tr>
     <td class="no">${i+1}</td>
-    <td><input list="dl-model" value="${esc(r.model)}" placeholder="Model" data-t="${t.id}" data-r="${i}" data-k="model" aria-label="Model"></td>
+    <td>${modelSelect(t.id,i,r.model)}</td>
     <td><input inputmode="decimal" value="${esc(r.lebar)}" placeholder="–" data-t="${t.id}" data-r="${i}" data-k="lebar" aria-label="Lebar"></td>
     <td><input inputmode="decimal" value="${esc(r.tinggi)}" placeholder="–" data-t="${t.id}" data-r="${i}" data-k="tinggi" aria-label="Tinggi"></td>
-    <td>${cekSelect(t.id,i,r.cek)}</td>
+    <td>${progressSelect(t.id,i,r.cek)}</td>
     <td class="x"><button data-act="del-row" data-t="${t.id}" data-r="${i}" aria-label="Hapus baris ${i+1}">×</button></td></tr>`).join('');
   return `<section class="tbl" data-tid="${t.id}">
     <header><input class="tname" list="dl-kain" value="${esc(t.nama)}" placeholder="${t.jenis==='kain'?'Nama kain + kode, mis. Arona 1-8':'Nama vitras + kode'}" data-t="${t.id}" data-k="nama" aria-label="Nama ${t.jenis}"><span class="cnt" data-cnt="${t.id}"></span>
     <button class="btn sm danger" data-act="del-table" data-t="${t.id}">Hapus</button></header>
-    <div class="scroll"><table><thead><tr><th></th><th>Model</th><th>Lebar (m)</th><th>Tinggi (m)</th><th>Cek</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="scroll"><table><thead><tr><th></th><th>Model</th><th>Lebar</th><th>Tinggi</th><th>Progres</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
     <div class="tfoot"><button class="btn sm" data-act="add-row" data-t="${t.id}">+ Baris</button></div></section>`;
 }
 function renderDetail(){
@@ -810,15 +2229,17 @@ function renderDetail(){
   const col=j=>`<div class="col"><h2>${j==='kain'?'Kain':'Vitras'}<button class="btn sm" data-act="add-table" data-j="${j}">+ Tambah ${j}</button></h2>${tab.filter(t=>t.jenis===j).map(tableHtml).join('')||`<p class="hint">Belum ada tabel ${j}.</p>`}</div>`;
   const hist=(c.riwayat||[]).slice().reverse().map(h=>`<li>${esc(fmtDate(h.dari))} → ${esc(fmtDate(h.ke))}${h.alasan?' · '+esc(h.alasan):''}</li>`).join('');
   const canEdit=Store.canEdit(c);
-  el.innerHTML=`<div class="card ${canEdit?'':'readonly-customer'}">
-    <div class="topline"><button class="btn sm back" data-act="back">← Daftar</button><span id="statusPill"></span></div>
+  el.innerHTML=`<div class="detail-menu">
+    <button class="btn" data-act="back">← Kembali ke dashboard</button>
+    <div class="detail-menu-right"><button class="btn primary" data-act="save-customer"${canEdit?'':' disabled'}>Simpan data</button></div>
+  </div>
+  <div class="card ${canEdit?'':'readonly-customer'}">
+    <div class="topline"><span id="statusPill"></span></div>
     ${canEdit?'':`<p class="hint">Data milik ${esc(c.ownerEmail||'pengguna lain')} — hanya dapat dilihat.</p>`}
     <input class="nameinput" data-f="nama" value="${esc(c.nama)}" placeholder="Nama customer" aria-label="Nama customer" style="margin-top:8px;width:100%">
     <div class="dhead">
       <div class="field"><label for="f-jadwal">Jadwal pasang</label><input id="f-jadwal" type="date" data-f="jadwal" value="${esc(c.jadwal)}"></div>
       <div class="field"><label for="f-jam">Jam</label><input id="f-jam" type="time" data-f="jam" value="${esc(c.jam)}"></div>
-      <div class="field"><label for="f-telp">No. telepon</label><input id="f-telp" data-f="telp" inputmode="tel" value="${esc(c.telp)}" placeholder="08…"></div>
-      <div class="field"><label for="f-alamat">Alamat</label><input id="f-alamat" data-f="alamat" value="${esc(c.alamat)}" placeholder="Alamat pemasangan"></div>
       <div class="field wide"><label for="f-cat">Catatan</label><input id="f-cat" data-f="catatan" value="${esc(c.catatan)}" placeholder="Misalnya: lantai 2, tukang bawa tangga"></div>
     </div>
     <div class="sum" id="sum"></div>
@@ -836,12 +2257,12 @@ function renderDetail(){
 function refreshLive(){
   const c=cur();if(!c)return;
   const s=stats(c);
-  const parts=[];
-  if(s.ok)parts.push(`<span class="pill ok">${s.ok} ready</span>`);
-  CEK.slice(2).forEach(k=>{if(s.count[k[0]])parts.push(`<span class="pill ${k[2]}">${s.count[k[0]]} ${k[1].toLowerCase()}</span>`)});
-  if(s.count['']) parts.push(`<span class="pill">${s.count['']} belum dicek</span>`);
+  const parts=CEK.filter(([status])=>s.count[status]).map(([status,label,tone])=>
+    `<span class="pill ${tone}">${s.count[status]} ${label.toLowerCase()}</span>`
+  );
+  if(s.count[''])parts.push(`<span class="pill none">${s.count['']} belum ada progres</span>`);
   const sum=$('#sum');
-  if(sum)sum.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b style="font-family:var(--display);font-size:16px">${s.n?`${s.ok} dari ${s.n} gorden ready`:'Belum ada ukuran diisi'}</b><span class="hint">${s.n&&s.ok===s.n?'Siap dipasang':''}</span></div>${barHtml(s)}<div class="sumrow">${parts.join('')}</div>`;
+  if(sum)sum.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b style="font-family:var(--display);font-size:calc(var(--text-scale, 1) * 16px)">${s.n?`${s.ok} dari ${s.n} gorden ready`:'Belum ada ukuran diisi'}</b><span class="hint">${s.n&&s.ok===s.n?'Siap dipasang':''}</span></div>${barHtml(s)}<div class="sumrow">${parts.join('')}</div>`;
   const pill=$('#statusPill');
   if(pill){
     const d=c.jadwal?dayDiff(c.jadwal):null;
@@ -855,19 +2276,43 @@ function refreshLive(){
       ?`<button class="btn" data-act="buka">Buka lagi</button><button class="btn danger" data-act="del-cust">Hapus customer</button>`
       :`<button class="btn" data-act="tunda-open">Tunda pemasangan</button><button class="btn primary" data-act="selesai">Tandai selesai dipasang</button><button class="btn danger" data-act="del-cust">Hapus customer</button>`;
   }
-  for(const t of c.tabel||[]){const e=document.querySelector(`[data-cnt="${t.id}"]`);if(e){const n=t.baris.filter(filled),k=n.filter(r=>r.cek==='ready').length;e.textContent=n.length?`${k}/${n.length} ready`:''}}
+  for(const t of c.tabel||[]){const e=document.querySelector(`[data-cnt="${t.id}"]`);if(e){const n=t.baris.filter(filled),k=n.filter(r=>normalizeProgress(r.cek)==='ready').length;e.textContent=n.length?`${k}/${n.length} ready`:''}}
   const names=[...new Set(state.customers.flatMap(x=>(x.tabel||[]).map(t=>t.nama).filter(Boolean)))];
   $('#dl-kain').innerHTML=names.map(n=>`<option value="${esc(n)}">`).join('');
 }
-function renderAll(){renderAlerts();renderList();renderDetail()}
+function renderAll(){
+  renderAlerts();renderList();renderDetail();updateTabVisibility();
+  renderUpdateCustomerOptions();
+  if(state.activeTab==='schedule')renderSchedule();
+  if(state.activeTab==='updates')renderUpdates();
+  if(state.activeTab==='profile')renderProfilePage();
+}
 function touch(c){Store.save(c);renderAlerts();renderList();refreshLive()}
 
 /* ---------- aksi ---------- */
-const armed=new WeakMap();
-function confirmTwice(btn,label){
-  if(armed.get(btn)){armed.delete(btn);return true}
-  armed.set(btn,1);const old=btn.textContent;btn.textContent=label;btn.classList.add('armed');
-  setTimeout(()=>{armed.delete(btn);btn.textContent=old;btn.classList.remove('armed')},3000);return false;
+async function saveCurrentCustomer(){
+  const c=cur();
+  if(!c||!Store.canEdit(c))return false;
+  try{
+    await Store.flush();
+    setSync('Data customer berhasil disimpan');
+    return true;
+  }catch(error){
+    setSync('Gagal menyimpan: '+error.message);
+    return false;
+  }
+}
+async function returnToDashboard(){
+  const selectedId=cur()?.id;
+  if(!selectedId)return;
+  if(Store.canEdit(cur())){
+    const saved=await saveCurrentCustomer();
+    if(!saved)return;
+  }
+  if(cur()?.id!==selectedId)return;
+  state.sel=null;
+  state.tunda=false;
+  renderAll();
 }
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;
@@ -882,13 +2327,22 @@ document.addEventListener('click',e=>{
       const n={id:uid(),nama:'',telp:'',alamat:'',jadwal:'',jam:'',catatan:'',status:'terjadwal',riwayat:[],tabel:[newTable('kain'),newTable('vitras')],dibuat:Date.now()};
       state.customers.push(n);state.sel=n.id;state.tunda=false;Store.save(n);renderAll();document.querySelector('.nameinput')?.focus();break}
     case 'open':state.sel=b.dataset.id;state.tunda=false;renderAll();window.scrollTo({top:0});break;
-    case 'back':state.sel=null;renderAll();break;
+    case 'schedule-open':state.sel=b.dataset.id;state.tunda=false;setActiveTab('dashboard');renderAll();window.scrollTo({top:0});break;
+    case 'customer-avatar':{
+      const input=$('#customerAvatarInput');
+      input.dataset.customerId=b.dataset.id;
+      const customer=state.customers.find(item=>item.id===b.dataset.id);
+      if(customer?.avatar)openCustomerPhoto(customer);
+      else if(Store.canEdit(customer))openCustomerCamera(customer);
+      break}
+    case 'back':returnToDashboard();break;
+    case 'save-customer':saveCurrentCustomer();break;
     case 'filter':state.filter=b.dataset.f;renderList();break;
     case 'add-table':c.tabel.push(newTable(b.dataset.j));Store.save(c);renderDetail();break;
-    case 'del-table':if(confirmTwice(b,'Yakin?')){c.tabel=c.tabel.filter(x=>x.id!==t.id);Store.save(c);renderAlerts();renderList();renderDetail()}break;
+    case 'del-table':if(confirm(`Hapus tabel ${t.nama|| (t.jenis==='kain'?'kain':'vitras')}? Semua ukuran di tabel ini akan ikut terhapus.`)){c.tabel=c.tabel.filter(x=>x.id!==t.id);Store.save(c);renderAlerts();renderList();renderDetail()}break;
     case 'add-row':t.baris.push(newRow());Store.save(c);renderDetail();break;
-    case 'del-row':t.baris.splice(+b.dataset.r,1);if(!t.baris.length)t.baris.push(newRow());Store.save(c);renderAlerts();renderList();renderDetail();break;
-    case 'del-cust':if(confirmTwice(b,'Yakin hapus?')){const id=c.id;state.customers=state.customers.filter(x=>x.id!==id);state.sel=null;Store.remove(id);renderAll()}break;
+    case 'del-row':if(confirm('Hapus data ukuran pada baris ini? Tindakan ini tidak dapat dibatalkan.')){t.baris.splice(+b.dataset.r,1);if(!t.baris.length)t.baris.push(newRow());Store.save(c);renderAlerts();renderList();renderDetail()}break;
+    case 'del-cust':if(confirm(`Hapus data customer ${nameOf(c)} beserta semua tabel dan ukurannya? Tindakan ini tidak dapat dibatalkan.`)){const id=c.id;state.customers=state.customers.filter(x=>x.id!==id);state.sel=null;Store.remove(id);renderAll()}break;
     case 'selesai':c.status='selesai';touch(c);renderDetail();break;
     case 'buka':c.status='terjadwal';touch(c);renderDetail();break;
     case 'tunda-open':state.tunda=true;renderDetail();break;
@@ -897,6 +2351,61 @@ document.addEventListener('click',e=>{
       const tgl=$('#tn-tgl').value;if(!tgl){$('#tn-tgl').focus();return}
       (c.riwayat=c.riwayat||[]).push({dari:c.jadwal||'',ke:tgl,alasan:$('#tn-alasan').value.trim(),pada:Date.now()});
       c.jadwal=tgl;c.status='ditunda';state.tunda=false;touch(c);renderDetail();break}
+  }
+});
+$('#photoDialog').addEventListener('click',event=>{
+  if(event.target.closest('[data-photo-close]'))$('#photoDialog').close();
+  else if(event.target.closest('[data-photo-delete]')){
+    const customer=state.customers.find(item=>item.id===$('#photoDialog').dataset.customerId);
+    deleteCustomerPhoto(customer);
+  }
+  else if(event.target.closest('[data-photo-camera]')){
+    const customer=state.customers.find(item=>item.id===$('#photoDialog').dataset.customerId);
+    $('#photoDialog').close();
+    openCustomerCamera(customer);
+  }
+  else if(event.target.closest('[data-photo-change]')){
+    $('#photoDialog').close();
+    $('#customerAvatarInput').click();
+  }else{
+    const zoomButton=event.target.closest('[data-zoom]');
+    if(!zoomButton)return;
+    const current=Number($('#photoZoom').value);
+    if(zoomButton.dataset.zoom==='in')setPhotoZoom(current+.25);
+    else if(zoomButton.dataset.zoom==='out')setPhotoZoom(current-.25);
+    else setPhotoZoom(1);
+  }
+});
+$('#cameraDialog').addEventListener('click',async event=>{
+  if(event.target.closest('[data-camera-close]')){
+    $('#cameraDialog').close();
+    return;
+  }
+  if(event.target.closest('[data-camera-gallery]')){
+    $('#customerAvatarInput').dataset.customerId=$('#cameraDialog').dataset.customerId;
+    $('#cameraDialog').close();
+    $('#customerAvatarInput').click();
+    return;
+  }
+  if(!event.target.closest('[data-camera-capture]'))return;
+  const video=$('#cameraVideo'),customer=state.customers.find(item=>item.id===$('#cameraDialog').dataset.customerId);
+  if(!customer||!Store.canEdit(customer)){setSync('Foto hanya dapat diubah oleh pemilik data customer.');return}
+  try{
+    const photo=encodeCustomerPhoto(video,video.videoWidth,video.videoHeight);
+    if(await saveCustomerPhoto(customer,photo))$('#cameraDialog').close();
+  }catch(error){
+    $('#cameraError').textContent=error.message;
+  }
+});
+$('#cameraDialog').addEventListener('close',stopCamera);
+$('#photoZoom').addEventListener('input',event=>setPhotoZoom(event.target.value));
+window.addEventListener('resize',()=>{
+  if($('#photoDialog').open)setPhotoZoom($('#photoZoom').value);
+});
+document.addEventListener('keydown',event=>{
+  if(event.target.matches('.item[role="button"]')&&(event.key==='Enter'||event.key===' ')){
+    event.preventDefault();
+    event.target.click();
   }
 });
 document.addEventListener('input',e=>{
@@ -909,77 +2418,45 @@ document.addEventListener('input',e=>{
   if(el.dataset.t){
     const t=c.tabel.find(x=>x.id===el.dataset.t);if(!t)return;
     if(el.dataset.r!==undefined){t.baris[+el.dataset.r][el.dataset.k]=el.value;
-      if(el.dataset.k==='cek')el.className='cek '+(TONE[el.value]||'none')}
+      if(el.dataset.k==='cek')el.className='progress-select '+progressTone(el.value)}
     else t[el.dataset.k]=el.value;
     touch(c);
   }
 });
-/* logo: ganti dengan mengetuk kotak logo */
-$('#logoBtn').addEventListener('click',()=>$('#logoFile').click());
-$('#logoFile').addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;
-  const img=new Image(),url=URL.createObjectURL(f);
-  img.onload=()=>{
-    const s=256,cv=document.createElement('canvas');cv.width=cv.height=s;
-    const x=cv.getContext('2d'),m=Math.min(img.width,img.height);
-    x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,s,s);
-    state.logo=cv.toDataURL('image/png');URL.revokeObjectURL(url);renderBrand();Store.saveLogo(state.logo);
-  };
-  img.src=url;
+$('#customerAvatarInput').addEventListener('change',async event=>{
+  const input=event.currentTarget,file=input.files[0],customerId=input.dataset.customerId;
+  input.value='';
+  if(!file||!customerId)return;
+  const customer=state.customers.find(item=>item.id===customerId);
+  if(!customer||!Store.canEdit(customer)){setSync('Foto hanya dapat diubah oleh pemilik data customer.');return}
+  if(!file.type.startsWith('image/')){setSync('Pilih file foto dengan format gambar.');return}
+  if(file.size>20*1024*1024){setSync('Ukuran foto maksimal 20 MB.');return}
+  let objectUrl='';
+  setSync('Memproses foto customer…');
+  try{
+    const photo=await new Promise((resolve,reject)=>{
+      const image=new Image();
+      objectUrl=URL.createObjectURL(file);
+      image.onload=()=>{
+        try{
+          resolve(encodeCustomerPhoto(image,image.naturalWidth,image.naturalHeight));
+        }catch(error){reject(error)}
+      };
+      image.onerror=()=>reject(new Error('File foto tidak dapat dibuka.'));
+      image.src=objectUrl;
+    });
+    await saveCustomerPhoto(customer,photo);
+  }catch(error){
+    setSync('Gagal menyimpan foto customer: '+error.message);
+  }finally{
+    if(objectUrl)URL.revokeObjectURL(objectUrl);
+  }
 });
-
-/* ---------- carousel inspirasi gorden ---------- */
-const slider=$('#curtainSlider');
-const slides=[...slider.querySelectorAll('[data-slide]')];
-const dots=[...slider.querySelectorAll('[data-slider-index]')];
-const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-let activeSlide=0,slideTimer=null,manualPause=reduceMotion.matches;
-function showSlide(index){
-  activeSlide=(index+slides.length)%slides.length;
-  slides.forEach((slide,i)=>{
-    const active=i===activeSlide;
-    slide.dataset.active=String(active);
-    slide.setAttribute('aria-hidden',String(!active));
-  });
-  dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===activeSlide)));
-}
-function stopSlideTimer(){
-  if(slideTimer){clearInterval(slideTimer);slideTimer=null}
-}
-function syncSlideTimer(){
-  stopSlideTimer();
-  const paused=manualPause||reduceMotion.matches||document.hidden||slider.matches(':hover')||slider.contains(document.activeElement);
-  $('#sliderPause').textContent=manualPause?'▶':'Ⅱ';
-  $('#sliderPause').setAttribute('aria-label',manualPause?'Putar slide otomatis':'Jeda slide otomatis');
-  $('#sliderPause').setAttribute('aria-pressed',String(manualPause));
-  if(!paused)slideTimer=setInterval(()=>showSlide(activeSlide+1),7000);
-}
-slider.addEventListener('click',event=>{
-  const control=event.target.closest('[data-slider]');
-  const dot=event.target.closest('[data-slider-index]');
-  if(control?.dataset.slider==='previous')showSlide(activeSlide-1);
-  else if(control?.dataset.slider==='next')showSlide(activeSlide+1);
-  else if(control?.dataset.slider==='pause')manualPause=!manualPause;
-  else if(dot)showSlide(Number(dot.dataset.sliderIndex));
-  else return;
-  syncSlideTimer();
-});
-slider.addEventListener('pointerenter',syncSlideTimer);
-slider.addEventListener('pointerleave',syncSlideTimer);
-slider.addEventListener('focusin',syncSlideTimer);
-slider.addEventListener('focusout',()=>requestAnimationFrame(syncSlideTimer));
-document.addEventListener('visibilitychange',syncSlideTimer);
-reduceMotion.addEventListener?.('change',event=>{
-  if(event.matches)manualPause=true;
-  syncSlideTimer();
-});
-
 /* ---------- mulai ---------- */
 $('#app').hidden=true;
 updateAuthMode();
-renderBrand();renderAll();
-syncSlideTimer();
-setInterval(()=>{renderAlerts()},60*1000);
+renderAll();
+setInterval(()=>{renderAlerts();renderUpdates()},60*1000);
 </script>
 
 </body></html>
