@@ -90,6 +90,10 @@ button{cursor:pointer}
 .alert .st.good{color:var(--ok);font-weight:600}
 .alerts-empty{color:var(--muted);font-size:calc(var(--text-scale, 1) * 13px);padding:2px 0 14px}
 .tab-page{min-height:calc(100vh - 180px);padding-bottom:18px}
+.dashboard-page{min-width:0}
+.page-viewport{min-width:0}
+.page-track{min-width:0}
+.tab-panel{min-width:0}
 .schedule-calendar{max-width:760px;margin:0 auto 20px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .schedule-calendar-toolbar{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:10px;margin-bottom:12px}
 .schedule-calendar-toolbar strong{text-align:center;font:700 calc(var(--text-scale, 1) * 18px) var(--display);text-transform:capitalize}
@@ -173,8 +177,19 @@ button{cursor:pointer}
 .profile-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
 .profile-card h2{margin:0 0 14px;font:700 calc(var(--text-scale, 1) * 19px) var(--display)}
 .profile-form{display:grid;gap:12px}
-.profile-identity{display:flex;align-items:center;gap:14px}
-.profile-avatar{width:76px;height:76px}
+.account-profile-card{padding:0;overflow:hidden}
+.profile-cover{position:relative;min-height:144px;display:flex;justify-content:flex-end;align-items:flex-start;padding:12px;background-color:#1D5E4E;background-position:center;background-size:cover}
+.profile-cover-actions{position:relative;z-index:1;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.profile-cover .btn,.profile-color-control{min-height:36px;border:1px solid #ffffff99;border-radius:9px;background:#10251dcc;color:#fff;backdrop-filter:blur(8px)}
+.profile-cover .btn{padding:6px 10px}
+.profile-color-control{display:flex;align-items:center;gap:7px;padding:4px 8px;font-size:calc(var(--text-scale, 1) * 12px);font-weight:600;cursor:pointer}
+.profile-color-control input{width:26px;height:26px;padding:2px;border:0;border-radius:6px;background:transparent;cursor:pointer}
+.profile-avatar{position:absolute;z-index:2;bottom:-48px;left:50%;width:100px;height:100px;transform:translateX(-50%);border:4px solid var(--surface);border-radius:50%;background:var(--soft);object-fit:cover;box-shadow:0 4px 16px #0002}
+.account-profile-form{padding:58px 16px 16px}
+.profile-identity{display:grid;justify-items:center;gap:3px;text-align:center}
+.profile-identity h2{margin:0;font:700 calc(var(--text-scale, 1) * 20px) var(--display);overflow-wrap:anywhere}
+.profile-identity small{color:var(--muted);font-size:calc(var(--text-scale, 1) * 12px);overflow-wrap:anywhere}
+.profile-photo-button{margin-top:5px}
 .profile-form input[type="color"]{height:42px;padding:3px}
 .palette-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .profile-actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -307,9 +322,20 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
 .camera-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
 .camera-dialog .btn{color:#fff;border-color:#ffffff66;background:#202722}
 .camera-dialog .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-#app[data-view="detail"]>.brand,#app[data-view="detail"]>#alerts{display:none}
+#app[data-view="detail"]>.brand,#app[data-view="detail"] .dashboard-page #alerts{display:none}
 #app[data-view="detail"]{padding-top:0}
 @media (max-width:900px){
+  .page-viewport{
+    width:100%;overflow:hidden;touch-action:pan-y;
+  }
+  .page-track{
+    display:flex;width:400%;align-items:flex-start;
+    transition:transform .32s cubic-bezier(.22,.8,.25,1)
+  }
+  .tab-panel{flex:0 0 25%;width:25%}
+  .page-viewport{transition:height .24s cubic-bezier(.22,.8,.25,1)}
+  .page-viewport.is-dragging .page-track{transition:none}
+  .page-viewport.is-dragging{user-select:none}
   .main{grid-template-columns:minmax(0,1fr)}
   .side{position:static;max-height:none}
   #app[data-view="detail"] .side{display:none}
@@ -322,26 +348,34 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
   .guide-content{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:520px){
+  body{
+    padding-left:max(8px,env(safe-area-inset-left,0px));
+    padding-right:max(8px,env(safe-area-inset-right,0px));
+  }
+  .wrap{padding-block:10px 24px}
   .brand{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 12px}
+  .brand{padding-bottom:10px}
   .brand .sp{display:none}
   .brand h1{overflow-wrap:anywhere}
   .brand .account-tools{grid-column:2;min-width:0;flex-wrap:wrap}
   .brand .account-name{overflow-wrap:anywhere}
+  .schedule-calendar,.profile-card,.update-composer,.guide-card,.guide-calculator,.guide-editor,.card{padding:12px}
+  .account-profile-card{padding:0}
+  .account-profile-form{padding:58px 12px 12px}
+  .profile-cover{min-height:132px;padding:10px}
+  .profile-cover-actions{gap:6px}
+  .profile-cover .btn{padding:5px 8px;font-size:calc(var(--text-scale, 1) * 12px)}
+  .main{gap:12px}
 }
-@keyframes tab-slide-next{from{opacity:.55;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
-@keyframes tab-slide-previous{from{opacity:.55;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
-@media (prefers-reduced-motion:no-preference){
-  #app[data-tab-direction="next"] .main:not([hidden]),
-  #app[data-tab-direction="next"] .tab-page:not([hidden]){animation:tab-slide-next .22s ease-out}
-  #app[data-tab-direction="previous"] .main:not([hidden]),
-  #app[data-tab-direction="previous"] .tab-page:not([hidden]){animation:tab-slide-previous .22s ease-out}
-}
+@media (prefers-reduced-motion:reduce){.page-viewport,.page-track{transition:none!important}}
 @media (prefers-reduced-motion:no-preference){.alert,.item,.btn{transition:border-color .15s,background .15s}}
-.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--bg)}
+.auth-screen{min-height:100vh;min-height:100svh;min-height:100dvh;display:grid;place-items:center;overflow-y:auto;overscroll-behavior-y:contain;padding:24px;background:var(--bg)}
 .auth-card{width:min(100%,420px);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 12px 35px #16211d18}
 .auth-card h1{font:700 calc(var(--text-scale, 1) * 25px) var(--display);margin:0 0 5px}
 .auth-card p{color:var(--muted);margin:0 0 18px}
 .auth-form{display:grid;gap:12px}
+.auth-card .btn{min-height:44px;touch-action:manipulation}
+#authSubmit{width:100%;min-height:48px}
 .auth-form label{display:grid;gap:5px;font-weight:600;font-size:calc(var(--text-scale, 1) * 13px)}
 .auth-form input,.dialog-form input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .password-control{display:flex;gap:7px;align-items:center}
@@ -451,18 +485,21 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
     <div class="account-tools"><span class="account-name" id="accountName"></span><span class="pill" id="accountRole" hidden>Admin</span></div>
   </div>
   <div class="sync" id="sync" role="status" aria-live="polite" hidden></div>
-  <div id="alerts"></div>
-  <div class="main">
-    <aside class="side">
-      <button class="btn primary" data-act="add-cust">+ Customer baru</button>
-      <input class="search" id="q" type="search" placeholder="Cari nama customer" aria-label="Cari nama customer">
-      <div class="chips" id="chips"></div>
-      <div class="list" id="list"></div>
-    </aside>
-    <main class="detail" id="detail"></main>
-  </div>
-  <div class="tab-page" id="tabPage" hidden>
-    <section id="schedulePage" data-page="schedule" hidden>
+  <div class="page-viewport" id="pageViewport">
+    <div class="page-track" id="pageTrack">
+      <section class="dashboard-page tab-panel" data-page="dashboard">
+        <div id="alerts"></div>
+        <div class="main">
+          <aside class="side">
+            <button class="btn primary" data-act="add-cust">+ Customer baru</button>
+            <input class="search" id="q" type="search" placeholder="Cari nama customer" aria-label="Cari nama customer">
+            <div class="chips" id="chips"></div>
+            <div class="list" id="list"></div>
+          </aside>
+          <main class="detail" id="detail"></main>
+        </div>
+      </section>
+      <section class="tab-page tab-panel" id="schedulePage" data-page="schedule" hidden>
       <div class="schedule-calendar" aria-label="Kalender jadwal pemasangan">
         <div class="schedule-calendar-toolbar">
           <button class="btn" type="button" data-calendar-month="-1" aria-label="Bulan sebelumnya">‹</button>
@@ -475,8 +512,8 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
         <div class="schedule-entry-heading"><h2 id="scheduleDateLabel"></h2><span id="scheduleDateCount"></span></div>
         <div class="schedule-entries" id="scheduleEntries"></div>
       </section>
-    </section>
-    <section id="updatesPage" data-page="updates" hidden>
+      </section>
+      <section class="tab-page tab-panel" id="updatesPage" data-page="updates" hidden>
       <div class="updates-status-page">
         <div class="my-status-container">
           <button class="my-status-row" type="button" data-my-status>
@@ -491,15 +528,25 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
         <div class="status-list" id="seenStatuses"></div>
       </div>
       <button class="status-compose-fab" type="button" data-add-status aria-label="Tambah status foto">＋</button>
-    </section>
-    <section id="profilePage" data-page="profile" hidden>
+      </section>
+      <section class="tab-page tab-panel" id="profilePage" data-page="profile" hidden>
       <div class="profile-layout">
-        <section class="profile-card">
-          <h2>Profil akun</h2>
-          <form class="profile-form" id="fullProfileForm">
+        <section class="profile-card account-profile-card">
+          <div class="profile-cover" id="profileCover">
+            <div class="profile-cover-actions">
+              <button class="btn" type="button" data-profile-cover>Ubah foto latar</button>
+              <label class="profile-color-control" for="profileBackgroundColor">Warna
+                <input id="profileBackgroundColor" type="color" value="#1D5E4E" aria-label="Pilih warna latar profil">
+              </label>
+              <input id="profileBackgroundInput" type="file" accept="image/*" hidden>
+            </div>
+            <img class="profile-avatar" id="profileAvatarPreview" alt="Foto profil">
+          </div>
+          <form class="profile-form account-profile-form" id="fullProfileForm">
             <div class="profile-identity">
-              <img class="profile-avatar" id="profileAvatarPreview" alt="Foto profil">
-              <button class="btn" type="button" data-profile-photo>Pilih foto profil</button>
+              <h2 id="profileDisplayName">Profil akun</h2>
+              <small id="profileDisplayEmail"></small>
+              <button class="btn profile-photo-button" type="button" data-profile-photo>Ganti foto profil</button>
               <input id="profilePhotoInput" type="file" accept="image/*" capture="user" hidden>
             </div>
             <label for="fullProfileName">Nama tampilan<input id="fullProfileName" maxlength="80" required></label>
@@ -539,7 +586,8 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
             <div class="profile-actions"><button class="btn primary" type="submit">Simpan tampilan</button><button class="btn" type="button" data-reset-preferences>Atur ulang</button></div>
             <div class="auth-error" id="preferencesError" role="alert"></div>
           </form>
-        </section>
+          </section>
+        </div>
       </div>
     </section>
   </div>
@@ -605,12 +653,12 @@ td.x button{border:0;background:transparent;color:var(--muted);font-size:calc(va
       <select id="updateMentions" multiple size="4" aria-describedby="mentionHint"></select>
     </label>
     <p class="hint" id="mentionHint">Pilih maksimal 10 akun yang memiliki status aktif.</p>
-    <button class="btn" type="button" data-update-photo>Pilih foto atau ambil foto</button>
-    <input id="updatePhotoInput" type="file" accept="image/*" capture="environment" hidden>
+    <button class="btn" type="button" data-update-photo>Pilih foto dari galeri</button>
+    <input id="updatePhotoInput" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif" hidden>
     <img class="update-photo-preview" id="updatePhotoPreview" alt="Pratinjau foto pembaruan" hidden>
     <div class="auth-error" id="updateError" role="alert"></div>
     <button class="btn primary" type="submit" id="publishUpdate" disabled>Bagikan status</button>
-    <p class="hint">Status foto terlihat oleh semua pengguna dan tersedia selama 24 jam.</p>
+    <p class="hint">Foto disimpan dalam kualitas asli (maksimal 20 MB). Status terlihat oleh semua pengguna selama 24 jam.</p>
   </form>
 </dialog>
 <dialog class="status-viewer" id="statusViewer" aria-label="Lihat status">
@@ -683,10 +731,14 @@ import {
   getFirestore,doc,getDoc,getDocs,setDoc,deleteDoc,collection,collectionGroup,query,where,
   onSnapshot,serverTimestamp,orderBy,Timestamp
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import {
+  deleteObject,getDownloadURL,getStorage,ref,uploadBytes
+} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js';
 const firebaseConfig={
   apiKey:'AIzaSyA3B8N1ADikP8-A_FMqZfsjFTYYAX-PD6E',
   authDomain:'sistem-produksi-hg.firebaseapp.com',
   projectId:'sistem-produksi-hg',
+  storageBucket:'sistem-produksi-hg.firebasestorage.app',
   appId:'1:1031781312851:web:06a99e6357001c118e99a6'
 };
 const firebaseApp=initializeApp(firebaseConfig);
@@ -695,6 +747,7 @@ const auth=initializeAuth(firebaseApp,{
   popupRedirectResolver:browserPopupRedirectResolver
 });
 const db=getFirestore(firebaseApp);
+const storage=getStorage(firebaseApp);
 const ADMIN_EMAIL='iamnoturender@gmail.com';
 const CEK=[
   ['belum_ada_bahan','Belum ada bahan','wait'],
@@ -742,7 +795,7 @@ const THEME_PRESETS={
   warm:{background:'#F5F0E7',card:'#FFFCF5',text:'#302A20',accent:'#8A6335'}
 };
 const today=()=>new Date().toLocaleDateString('sv');
-const state={customers:[],sel:null,q:'',filter:'semua',logo:null,profile:{name:'',phone:''},profilePhoto:'',preferences:{...DEFAULT_PREFERENCES},updates:[],productionGuides:[],selectedGuideId:'guide-window-sizing',guideEditId:null,guideDraftImage:'',activeTab:'dashboard',scheduleMonth:today().slice(0,7),selectedScheduleDate:today(),pendingUpdatePhoto:'',seenUpdateIds:new Set(),statusViewerItems:[],statusViewerIndex:0,statusViewerTimer:null,tunda:false,loaded:false,loadError:''};
+const state={customers:[],sel:null,q:'',filter:'semua',logo:null,profile:{name:'',phone:''},profilePhoto:'',profileBackgroundImage:'',profileBackgroundColor:'#1D5E4E',preferences:{...DEFAULT_PREFERENCES},updates:[],productionGuides:[],selectedGuideId:'guide-window-sizing',guideEditId:null,guideDraftImage:'',activeTab:'dashboard',scheduleMonth:today().slice(0,7),selectedScheduleDate:today(),pendingUpdatePhoto:null,pendingUpdatePreviewUrl:'',seenUpdateIds:new Set(),statusViewerItems:[],statusViewerIndex:0,statusViewerTimer:null,tunda:false,loaded:false,loadError:''};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validHex=value=>/^#[0-9a-f]{6}$/i.test(value||'');
@@ -805,12 +858,16 @@ const Store={
       await setDoc(profileRef,{email:user.email,name,phone:'',updatedAt:serverTimestamp()});
       state.profile={name,phone:''};
       state.profilePhoto='';
+      state.profileBackgroundImage='';
+      state.profileBackgroundColor='#1D5E4E';
       state.preferences={...DEFAULT_PREFERENCES};
     }else{
       const profile=profileSnap.data();
       state.profile={name:profile.name||user.displayName||'',phone:profile.phone||''};
       state.logo=typeof profile.logo==='string'?profile.logo:null;
       state.profilePhoto=typeof profile.profilePhoto==='string'?profile.profilePhoto:'';
+      state.profileBackgroundImage=typeof profile.profileBackgroundImage==='string'?profile.profileBackgroundImage:'';
+      state.profileBackgroundColor=validHex(profile.profileBackgroundColor)?profile.profileBackgroundColor:'#1D5E4E';
       state.preferences={...DEFAULT_PREFERENCES,...(profile.preferences||{})};
     }
     applyPreferences();
@@ -907,7 +964,8 @@ const Store={
     if(!this.user)throw new Error('Sesi akun sudah berakhir.');
     await setDoc(doc(db,'users',this.user.uid),{
       email:this.user.email,name:profile.name,phone:profile.phone,logo:'',
-      profilePhoto:state.profilePhoto,preferences:state.preferences,updatedAt:serverTimestamp()
+      profilePhoto:state.profilePhoto,profileBackgroundImage:state.profileBackgroundImage,
+      profileBackgroundColor:state.profileBackgroundColor,preferences:state.preferences,updatedAt:serverTimestamp()
     },{merge:true});
     state.profile=profile;
     $('#accountName').textContent=profile.name||this.user.email;
@@ -926,18 +984,47 @@ const Store={
     state.profilePhoto=profilePhoto;
     setSync('Foto profil berhasil disimpan');
   },
+  async saveProfileBackground(image,color){
+    if(!this.user)throw new Error('Sesi akun sudah berakhir.');
+    await setDoc(doc(db,'users',this.user.uid),{
+      profileBackgroundImage:image,profileBackgroundColor:color,updatedAt:serverTimestamp()
+    },{merge:true});
+    state.profileBackgroundImage=image;
+    state.profileBackgroundColor=color;
+    setSync('Latar profil berhasil disimpan');
+  },
   async saveUpdate(update){
     if(!this.user)throw new Error('Sesi akun sudah berakhir.');
-    await setDoc(doc(db,'updates',uid()),{
-      ...update,ownerUid:this.user.uid,ownerName:(state.profile.name||this.user.email).slice(0,80),
-      customerName:String(update.customerName).slice(0,120),createdAt:serverTimestamp()
-    });
+    const updateId=uid();
+    const photoStoragePath=`updates/${this.user.uid}/${updateId}/photo`;
+    const photoRef=ref(storage,photoStoragePath);
+    await uploadBytes(photoRef,update.photo,{contentType:update.photo.type});
+    try{
+      await setDoc(doc(db,'updates',updateId),{
+        ...update,photo:await getDownloadURL(photoRef),photoStoragePath,
+        ownerUid:this.user.uid,ownerName:(state.profile.name||this.user.email).slice(0,80),
+        customerName:String(update.customerName).slice(0,120),createdAt:serverTimestamp()
+      });
+    }catch(error){
+      try{await deleteObject(photoRef)}
+      catch(cleanupError){
+        throw new Error(`${error.message} Foto sementara juga gagal dibersihkan: ${cleanupError.message}`);
+      }
+      throw error;
+    }
   },
   async removeUpdate(updateId){
     if(!this.user)throw new Error('Sesi akun sudah berakhir.');
     const update=state.updates.find(item=>item.id===updateId);
     if(!update||(!this.isAdmin&&update.ownerUid!==this.user.uid))throw new Error('Anda tidak memiliki izin untuk menghapus status ini.');
     await deleteDoc(doc(db,'updates',updateId));
+    if(update.photoStoragePath){
+      try{await deleteObject(ref(storage,update.photoStoragePath))}
+      catch(error){
+        if(error.code!=='storage/object-not-found')
+          setSync(`Status dihapus, tetapi foto gagal dibersihkan dari penyimpanan: ${error.message}`);
+      }
+    }
   },
   async saveProductionGuide(guide){
     if(!this.user)throw new Error('Sesi akun sudah berakhir.');
@@ -995,6 +1082,17 @@ function firebaseErrorMessage(error){
     return 'Database Firestore belum dibuat. Buat database default di Firebase Console.';
   return error.message||'Koneksi ke Firebase gagal.';
 }
+function firebaseStorageErrorMessage(error){
+  if(error.code==='permission-denied'||error.code==='firestore/permission-denied')
+    return firebaseErrorMessage(error);
+  if(error.code==='storage/unknown'||error.code==='storage/bucket-not-found')
+    return 'Firebase Storage belum siap untuk proyek sistem-produksi-hg. Aktifkan Storage di Firebase Console > Storage > Get started, lalu publikasikan storage.rules. Foto belum tersimpan.';
+  if(error.code==='storage/unauthorized')
+    return 'Firebase Storage menolak unggahan. Pastikan pengguna sudah masuk dan storage.rules terbaru sudah dipublikasikan.';
+  if(error.code==='storage/quota-exceeded')
+    return 'Kuota Firebase Storage terlampaui. Periksa pemakaian dan paket proyek Firebase.';
+  return error.message||'Unggahan foto gagal.';
+}
 function showAuthError(message){$('#authError').textContent=message}
 function checkPasswordRules(password){
   return {
@@ -1046,6 +1144,8 @@ async function submitAuth(event){
   const submit=$('#authSubmit'),email=$('#authEmail').value.trim().toLowerCase();
   const password=$('#authPassword').value;
   submit.disabled=true;
+  submit.setAttribute('aria-busy','true');
+  submit.textContent=authMode==='register'?'Membuat akun…':'Memeriksa akun…';
   showAuthError('');
   try{
     if(authMode==='register'){
@@ -1067,6 +1167,8 @@ async function submitAuth(event){
   }finally{
     registrationInProgress=false;
     submit.disabled=false;
+    submit.removeAttribute('aria-busy');
+    submit.textContent=authMode==='register'?'Buat akun':'Masuk';
   }
 }
 async function deleteCustomerPhoto(customer){
@@ -1151,7 +1253,8 @@ onAuthStateChanged(auth,async user=>{
   if(registrationInProgress)return;
   if(!user){
     Store.close();
-    state.customers=[];state.logo=null;state.profile={name:'',phone:''};state.profilePhoto='';state.preferences={...DEFAULT_PREFERENCES};state.updates=[];state.pendingUpdatePhoto='';state.sel=null;state.activeTab='dashboard';state.loaded=false;state.loadError='';
+    if(state.pendingUpdatePreviewUrl)URL.revokeObjectURL(state.pendingUpdatePreviewUrl);
+    state.customers=[];state.logo=null;state.profile={name:'',phone:''};state.profilePhoto='';state.profileBackgroundImage='';state.profileBackgroundColor='#1D5E4E';state.preferences={...DEFAULT_PREFERENCES};state.updates=[];state.pendingUpdatePhoto=null;state.pendingUpdatePreviewUrl='';state.sel=null;state.activeTab='dashboard';state.loaded=false;state.loadError='';
     state.seenUpdateIds=new Set();state.statusViewerItems=[];state.productionGuides=[];closeStatusViewer();
     applyPreferences();
     $('#updatePhotoPreview').hidden=true;$('#updatePhotoPreview').removeAttribute('src');$('#updateCaption').value='';
@@ -1394,25 +1497,52 @@ $('#bottomNav').addEventListener('click',event=>{
     renderAll();
   }else setActiveTab(button.dataset.tab);
 });
-let tabSwipeStart=null;
-$('#app').addEventListener('touchstart',event=>{
-  if(document.querySelector('dialog[open]')||event.touches.length!==1||event.target.closest('.bottom-nav,.menu-wrap,.scroll,.guide-tabs,.alerts-track,input,textarea,select,[contenteditable="true"]')){
-    tabSwipeStart=null;
-    return;
+const tabNames=['dashboard','schedule','updates','profile'];
+let tabPointer=null;
+const tabViewport=$('#pageViewport');
+tabViewport.addEventListener('pointerdown',event=>{
+  if(!window.matchMedia('(max-width:900px)').matches||event.pointerType!=='touch'||!event.isPrimary
+    ||document.querySelector('dialog[open]')
+    ||event.target.closest('.scroll,.guide-tabs,.alerts-track,input,textarea,select,[contenteditable="true"]'))return;
+  tabPointer={id:event.pointerId,x:event.clientX,y:event.clientY,startedAt:performance.now(),index:tabNames.indexOf(state.activeTab),width:tabViewport.clientWidth,dragging:false};
+});
+window.addEventListener('pointermove',event=>{
+  if(!tabPointer||event.pointerId!==tabPointer.id)return;
+  const deltaX=event.clientX-tabPointer.x,deltaY=event.clientY-tabPointer.y;
+  if(!tabPointer.dragging){
+    if(Math.max(Math.abs(deltaX),Math.abs(deltaY))<8)return;
+    if(Math.abs(deltaY)>Math.abs(deltaX)*1.1){tabPointer=null;return}
+    tabPointer.dragging=true;
+    tabViewport.classList.add('is-dragging');
   }
-  const touch=event.touches[0];
-  tabSwipeStart={x:touch.clientX,y:touch.clientY};
+  event.preventDefault();
+  const atEdge=(tabPointer.index===0&&deltaX>0)||(tabPointer.index===tabNames.length-1&&deltaX<0);
+  setPageTrackPosition(tabPointer.index,atEdge?deltaX*.28:deltaX);
+},{passive:false});
+window.addEventListener('pointerup',event=>{
+  if(!tabPointer||event.pointerId!==tabPointer.id)return;
+  const swipe=tabPointer,deltaX=event.clientX-swipe.x,elapsed=Math.max(1,performance.now()-swipe.startedAt);
+  tabPointer=null;
+  tabViewport.classList.remove('is-dragging');
+  if(!swipe.dragging){setPageTrackPosition(swipe.index);return}
+  const threshold=Math.max(56,swipe.width*.16),velocity=deltaX/elapsed;
+  let nextIndex=swipe.index;
+  if(deltaX<-threshold||velocity<-.45)nextIndex++;
+  else if(deltaX>threshold||velocity>.45)nextIndex--;
+  nextIndex=Math.max(0,Math.min(tabNames.length-1,nextIndex));
+  if(tabNames[nextIndex]!==state.activeTab)activateTab(tabNames[nextIndex],false);
+});
+window.addEventListener('pointercancel',event=>{
+  if(tabPointer&&event.pointerId!==tabPointer.id)return;
+  const index=tabPointer?.index??tabNames.indexOf(state.activeTab);
+  tabPointer=null;
+  tabViewport.classList.remove('is-dragging');
+  setPageTrackPosition(index);
+});
+window.addEventListener('resize',()=>{
+  updateTabVisibility();
+  syncPageViewportHeight();
 },{passive:true});
-$('#app').addEventListener('touchend',event=>{
-  if(!tabSwipeStart||event.changedTouches.length!==1){tabSwipeStart=null;return}
-  const touch=event.changedTouches[0],deltaX=touch.clientX-tabSwipeStart.x,deltaY=touch.clientY-tabSwipeStart.y;
-  tabSwipeStart=null;
-  if(Math.abs(deltaX)<60||Math.abs(deltaX)<Math.abs(deltaY)*1.25)return;
-  const tabs=['dashboard','schedule','updates','profile'],index=tabs.indexOf(state.activeTab);
-  const nextIndex=Math.max(0,Math.min(tabs.length-1,index+(deltaX<0?1:-1)));
-  if(nextIndex!==index)setActiveTab(tabs[nextIndex]);
-},{passive:true});
-$('#app').addEventListener('touchcancel',()=>{tabSwipeStart=null},{passive:true});
 $('#alerts').addEventListener('click',event=>{
   const button=event.target.closest('[data-alert-index]');
   if(!button)return;
@@ -1515,6 +1645,50 @@ $('#fullProfileForm').addEventListener('click',event=>{
   else if(event.target.closest('[data-profile-password]'))openAccountDialog('password');
   else if(event.target.closest('[data-profile-logout]'))logout();
 });
+$('#profileCover').addEventListener('click',event=>{
+  if(event.target.closest('[data-profile-cover]'))$('#profileBackgroundInput').click();
+});
+$('#profileBackgroundColor').addEventListener('input',event=>{
+  renderProfileCover(event.currentTarget.value);
+});
+$('#profileBackgroundColor').addEventListener('change',async event=>{
+  const previousColor=state.profileBackgroundColor,nextColor=event.currentTarget.value;
+  try{await Store.saveProfileBackground(state.profileBackgroundImage,nextColor)}
+  catch(error){
+    state.profileBackgroundColor=previousColor;
+    renderProfilePage();
+    $('#profileError').textContent='Gagal menyimpan warna latar profil: '+error.message;
+  }
+});
+$('#profileBackgroundInput').addEventListener('change',async event=>{
+  const input=event.currentTarget,file=input.files[0];
+  input.value='';
+  if(!file)return;
+  if(!file.type.startsWith('image/')||file.size>20*1024*1024){
+    $('#profileError').textContent='Pilih gambar latar maksimal 20 MB.';
+    return;
+  }
+  const previousImage=state.profileBackgroundImage,previousColor=state.profileBackgroundColor;
+  let objectUrl='';
+  try{
+    const image=await new Promise((resolve,reject)=>{
+      const element=new Image();
+      objectUrl=URL.createObjectURL(file);
+      element.onload=()=>resolve(encodeCustomerPhoto(element,element.naturalWidth,element.naturalHeight));
+      element.onerror=()=>reject(new Error('File gambar tidak dapat dibuka.'));
+      element.src=objectUrl;
+    });
+    state.profileBackgroundImage=image;
+    renderProfileCover();
+    await Store.saveProfileBackground(image,state.profileBackgroundColor);
+    $('#profileError').textContent='';
+  }catch(error){
+    state.profileBackgroundImage=previousImage;
+    state.profileBackgroundColor=previousColor;
+    renderProfilePage();
+    $('#profileError').textContent='Gagal menyimpan foto latar: '+error.message;
+  }finally{if(objectUrl)URL.revokeObjectURL(objectUrl)}
+});
 $('#profilePhotoInput').addEventListener('change',async event=>{
   const input=event.currentTarget,file=input.files[0];
   input.value='';
@@ -1548,21 +1722,26 @@ $('#updatePhotoInput').addEventListener('change',async event=>{
   const input=event.currentTarget,file=input.files[0];
   input.value='';
   if(!file)return;
-  if(!file.type.startsWith('image/')||file.size>20*1024*1024){
-    $('#updateError').textContent='Pilih gambar dengan ukuran maksimal 20 MB.';
+  const supportedTypes=['image/jpeg','image/png','image/webp','image/avif','image/heic','image/heif'];
+  if(!supportedTypes.includes(file.type)||file.size>20*1024*1024){
+    $('#updateError').textContent='Pilih foto JPG, PNG, WebP, AVIF, atau HEIC maksimal 20 MB.';
     return;
   }
   let objectUrl='';
-  $('#updateError').textContent='Memproses foto…';
+  $('#updateError').textContent='Memeriksa foto…';
   try{
-    state.pendingUpdatePhoto=await new Promise((resolve,reject)=>{
+    objectUrl=URL.createObjectURL(file);
+    await new Promise((resolve,reject)=>{
       const image=new Image();
-      objectUrl=URL.createObjectURL(file);
-      image.onload=()=>{try{resolve(encodeCustomerPhoto(image,image.naturalWidth,image.naturalHeight))}catch(error){reject(error)}};
-      image.onerror=()=>reject(new Error('File foto tidak dapat dibuka.'));
+      image.onload=()=>resolve();
+      image.onerror=()=>reject(new Error('Format foto ini tidak dapat ditampilkan di browser.'));
       image.src=objectUrl;
     });
-    $('#updatePhotoPreview').src=state.pendingUpdatePhoto;
+    if(state.pendingUpdatePreviewUrl)URL.revokeObjectURL(state.pendingUpdatePreviewUrl);
+    state.pendingUpdatePhoto=file;
+    state.pendingUpdatePreviewUrl=objectUrl;
+    $('#updatePhotoPreview').src=objectUrl;
+    objectUrl='';
     $('#updatePhotoPreview').hidden=false;
     $('#updateError').textContent='';
     renderUpdateCustomerOptions();
@@ -1590,7 +1769,9 @@ $('#updateForm').addEventListener('submit',async event=>{
       mentions:mentions.map(option=>({uid:option.value,name:option.textContent})),
       photo:state.pendingUpdatePhoto
     });
-    state.pendingUpdatePhoto='';
+    state.pendingUpdatePhoto=null;
+    if(state.pendingUpdatePreviewUrl)URL.revokeObjectURL(state.pendingUpdatePreviewUrl);
+    state.pendingUpdatePreviewUrl='';
     $('#updateCaption').value='';
     $('#updatePhotoPreview').hidden=true;
     $('#updatePhotoPreview').removeAttribute('src');
@@ -1598,7 +1779,7 @@ $('#updateForm').addEventListener('submit',async event=>{
     $('#updateForm').reset();
     $('#updateDialog').close();
     renderUpdates();
-  }catch(saveError){error.textContent='Gagal membagikan pembaruan: '+saveError.message}
+  }catch(saveError){error.textContent='Gagal membagikan pembaruan: '+firebaseStorageErrorMessage(saveError)}
   finally{renderUpdateCustomerOptions()}
 });
 $('#updateCustomer').addEventListener('change',renderUpdateCustomerOptions);
@@ -1810,30 +1991,69 @@ function openUpdatePhoto(update){
 function updateTabVisibility(){
   const tab=state.activeTab;
   const tabTitles={dashboard:'Dashboard',schedule:'Jadwal',updates:'Pembaruan',profile:'Profil'};
+  const isCarousel=window.matchMedia('(max-width:900px)').matches;
   $('#app').dataset.activeTab=tab;
+  setPageTrackPosition(tabNames.indexOf(tab));
   $('#appTitle').textContent=tabTitles[tab]||tabTitles.dashboard;
   $('#brandSubtitle').hidden=tab!=='dashboard';
   $('#accountName').parentElement.hidden=tab!=='dashboard';
   $('#alerts').hidden=tab!=='dashboard';
-  $('.main').hidden=tab!=='dashboard';
-  $('#tabPage').hidden=tab==='dashboard';
-  document.querySelectorAll('[data-page]').forEach(page=>{page.hidden=page.dataset.page!==tab});
+  document.querySelectorAll('[data-page]').forEach(page=>{
+    const active=page.dataset.page===tab;
+    page.hidden=!isCarousel&&!active;
+    page.inert=!active;
+    page.setAttribute('aria-hidden',String(!active));
+  });
+  if(isCarousel)syncPageViewportHeight();
   document.querySelectorAll('[data-tab]').forEach(button=>{
     button.setAttribute('aria-current',button.dataset.tab===tab?'page':'false');
   });
 }
-function setActiveTab(tab){
+function setPageTrackPosition(index,dragX=0){
+  const track=$('#pageTrack'),viewport=$('#pageViewport');
+  if(!window.matchMedia('(max-width:900px)').matches){
+    track.style.removeProperty('transform');
+    return;
+  }
+  const targetX=-index*viewport.clientWidth+dragX;
+  track.style.transform=`translate3d(${targetX}px,0,0)`;
+}
+function syncPageViewportHeight(){
+  const viewport=$('#pageViewport'),activePage=document.querySelector(`[data-page="${state.activeTab}"]`);
+  const height=activePage?.scrollHeight||0;
+  if(viewport&&height&&window.matchMedia('(max-width:900px)').matches)
+    viewport.style.height=`${height}px`;
+}
+if(typeof ResizeObserver==='function'){
+  let lastViewportWidth=0;
+  const pageHeightObserver=new ResizeObserver(()=>{
+    const width=tabViewport.clientWidth;
+    if(width&&width!==lastViewportWidth){
+      lastViewportWidth=width;
+      setPageTrackPosition(tabNames.indexOf(state.activeTab));
+    }
+    syncPageViewportHeight();
+  });
+  document.querySelectorAll('[data-page]').forEach(page=>pageHeightObserver.observe(page));
+  pageHeightObserver.observe(tabViewport);
+}
+function activateTab(tab,shouldScroll){
   if(!['dashboard','schedule','updates','profile'].includes(tab))return;
-  if(cur()&&tab!=='dashboard'&&Store.canEdit(cur()))saveCurrentCustomer();
-  const tabs=['dashboard','schedule','updates','profile'];
-  const oldIndex=tabs.indexOf(state.activeTab),newIndex=tabs.indexOf(tab);
-  if(oldIndex!==newIndex)$('#app').dataset.tabDirection=newIndex>oldIndex?'next':'previous';
+  const previousTab=state.activeTab;
+  if(previousTab==='dashboard'&&tab!=='dashboard'&&cur()&&Store.canEdit(cur()))saveCurrentCustomer();
   state.activeTab=tab;
   updateTabVisibility();
   if(tab==='schedule')renderSchedule();
   if(tab==='updates'){renderUpdateCustomerOptions();renderUpdates()}
   if(tab==='profile')renderProfilePage();
-  window.scrollTo({top:0,behavior:'smooth'});
+  syncPageViewportHeight();
+  if(shouldScroll){
+    const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+    window.scrollTo({top:0,behavior});
+  }
+}
+function setActiveTab(tab){
+  activateTab(tab,true);
 }
 function renderSchedule(){
   const calendar=$('#scheduleCalendar'),entriesElement=$('#scheduleEntries');
@@ -2135,7 +2355,11 @@ function renderProfilePage(){
   $('#fullProfileName').value=state.profile.name||'';
   $('#fullProfilePhone').value=state.profile.phone||'';
   $('#fullProfileEmail').value=Store.user.email||'';
+  $('#profileDisplayName').textContent=state.profile.name||'Profil akun';
+  $('#profileDisplayEmail').textContent=Store.user.email||'';
   $('#profileAvatarPreview').src=state.profilePhoto||`data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="#DDE8E2"/><text x="40" y="48" text-anchor="middle" font-family="sans-serif" font-size="26" fill="#1D5E4E">${esc(initialsOf(state.profile.name||Store.user.email||'U'))}</text></svg>`)}`;
+  $('#profileBackgroundColor').value=validHex(state.profileBackgroundColor)?state.profileBackgroundColor:'#1D5E4E';
+  renderProfileCover();
   $('#themeMode').value=state.preferences.mode;
   $('#themePreset').value=state.preferences.preset;
   $('#themeBackground').value=validHex(state.preferences.background)?state.preferences.background:DEFAULT_PREFERENCES.background;
@@ -2145,6 +2369,14 @@ function renderProfilePage(){
   $('#themeFont').value=state.preferences.font;
   $('#themeTextScale').value=String(Math.min(130,Math.max(80,Number(state.preferences.textScale)||100)));
   $('#themeTextScaleValue').value=`${$('#themeTextScale').value}%`;
+}
+function renderProfileCover(color=state.profileBackgroundColor){
+  const cover=$('#profileCover');
+  if(!cover)return;
+  cover.style.backgroundColor=validHex(color)?color:'#1D5E4E';
+  cover.style.backgroundImage=state.profileBackgroundImage
+    ?`linear-gradient(180deg,#00000014,#00000024),url("${state.profileBackgroundImage}")`
+    :'linear-gradient(135deg,#ffffff18,transparent 58%),linear-gradient(115deg,#10251d33,transparent 70%)';
 }
 
 /* ---------- tampilan ---------- */
